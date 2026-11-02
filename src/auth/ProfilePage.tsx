@@ -35,7 +35,7 @@ export function ProfilePage() {
     setEmail(profile.email)
   }, [profile?.id])
 
-  if (isLoading || !profile) return <main className="shell"><p>Loading profile…</p></main>
+  if (isLoading || !profile) return <div className="page-block"><p>Loading profile…</p></div>
 
   async function saveProfile(event: FormEvent) {
     event.preventDefault()
@@ -97,10 +97,10 @@ export function ProfilePage() {
   const initials = (displayName || email).split(/\s+|@/).filter(Boolean).slice(0, 2).map((part) => part[0]?.toUpperCase()).join("")
 
   return (
-    <main className="shell profile-grid">
+    <div className="profile-grid">
       <header className="page-header">
         <div><p className="eyebrow">Account</p><h1>Your profile</h1></div>
-        <a href="/">Back to application</a>
+        <a href="/">Back to home</a>
       </header>
       {message ? <p className="form-success" role="status">{message}</p> : null}
       {error ? <p className="form-error" role="alert">{error}</p> : null}
@@ -138,6 +138,6 @@ export function ProfilePage() {
         <label>Confirm new password<input type="password" autoComplete="new-password" minLength={8} required value={confirmPassword} onChange={(event) => setConfirmPassword(event.target.value)} /></label>
         <button type="submit">Change password</button>
       </form>
-    </main>
+    </div>
   )
 }

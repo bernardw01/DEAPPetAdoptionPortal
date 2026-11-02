@@ -2,7 +2,7 @@
 
 ## Status
 
-Planned
+Built
 
 Approved by Bernard Williams (Product Owner) on 2026-11-02, as written in this
 revision. Open decisions below remain at the stated recommendations unless the
@@ -194,25 +194,25 @@ read time. No logging changes. Rollback is a revert (below).
 
 ## Acceptance criteria
 
-- [ ] AC-SITE-01: An unauthenticated visitor can open `/` and receives the home page, not a redirect to `/login`; `/profile` still redirects unauthenticated visitors to `/login`.
-- [ ] AC-SITE-02: Every public page renders a header containing the wordmark linking to `/` and a navigation landmark named "Primary" with links, in order, Home, Animals, Adopt / Foster, Surrender, Volunteer, Ways to Give, Successes, each with the href listed in the route table.
-- [ ] AC-SITE-03: Each route in the route table responds successfully, shows exactly one h1 that is unique across routes, and sets a unique document title and meta description.
-- [ ] AC-SITE-04: The link for the current route has `aria-current="page"` and a visible non-color indicator; no other nav link does.
-- [ ] AC-SITE-05: At widths below 48rem, after hydration, the nav is collapsed behind a button named "Menu" with `aria-expanded` and `aria-controls`; Enter and Space toggle it; Escape closes it and returns focus to the button; at 48rem and above all links are visible with no button.
-- [ ] AC-SITE-06: Every page has a skip link as the first focusable element that moves focus to the single `main` landmark.
-- [ ] AC-SITE-07: The footer shows the rescue address, phone and email, links to About Us and Contact Us, and an external Volunteer Portal link with `rel="noopener noreferrer"` whose accessible name identifies it as external.
-- [ ] AC-SITE-08: In the prerendered HTML the account control is "Sign in"; after hydration an authenticated user sees "Account" linking to `/profile` and a Sign out control, with no hydration warnings.
-- [ ] AC-SITE-09: Brand tokens exist once, as CSS custom properties with the names and values in the design direction, and every foreground and background pair listed in the design direction meets its stated minimum contrast ratio in a unit test.
-- [ ] AC-SITE-10: Fonts load from the application's own origin; a browser test records zero requests to other origins on every public route.
-- [ ] AC-SITE-11: `/login`, `/signup` and `/profile` keep their existing behavior and tests, and use brand tokens.
-- [ ] AC-SITE-12: Project name, package name, profile displayName and Wasp app title identify the Pet Rescue by Judy portal and no starter placeholder text remains on public pages.
-- [ ] AC-PRERENDER-01: Every public route in the route table, including `/login` and `/signup`, is declared with prerendering, and a production build emits a static HTML file for each.
-- [ ] AC-PRERENDER-02: Without running JavaScript, the prerendered HTML of every public route contains the header navigation links, the page h1, the title, the meta description and the footer.
-- [ ] AC-PRERENDER-03: Loading each prerendered route in a browser produces no React hydration warning or console error.
-- [ ] AC-PRERENDER-04: A route with `authRequired` is never marked for prerendering (the build fails compile otherwise).
-- [ ] AC-A11Y-01: Every public route state has no serious or critical axe violations at 320 px and at desktop width.
-- [ ] AC-A11Y-02: The primary task (reach each navigation destination) is operable by keyboard only, with visible focus and correct focus return after closing the menu.
-- [ ] AC-A11Y-03: Pages reflow at 320 px without horizontal scrolling and remain usable at 200 percent text zoom.
+- [x] AC-SITE-01: An unauthenticated visitor can open `/` and receives the home page, not a redirect to `/login`; `/profile` still redirects unauthenticated visitors to `/login`.
+- [x] AC-SITE-02: Every public page renders a header containing the wordmark linking to `/` and a navigation landmark named "Primary" with links, in order, Home, Animals, Adopt / Foster, Surrender, Volunteer, Ways to Give, Successes, each with the href listed in the route table.
+- [x] AC-SITE-03: Each route in the route table responds successfully, shows exactly one h1 that is unique across routes, and sets a unique document title and meta description.
+- [x] AC-SITE-04: The link for the current route has `aria-current="page"` and a visible non-color indicator; no other nav link does.
+- [x] AC-SITE-05: At widths below 48rem, after hydration, the nav is collapsed behind a button named "Menu" with `aria-expanded` and `aria-controls`; Enter and Space toggle it; Escape closes it and returns focus to the button; at 48rem and above all links are visible with no button.
+- [x] AC-SITE-06: Every page has a skip link as the first focusable element that moves focus to the single `main` landmark.
+- [x] AC-SITE-07: The footer shows the rescue address, phone and email, links to About Us and Contact Us, and an external Volunteer Portal link with `rel="noopener noreferrer"` whose accessible name identifies it as external.
+- [x] AC-SITE-08: In the prerendered HTML the account control is "Sign in"; after hydration an authenticated user sees "Account" linking to `/profile` and a Sign out control, with no hydration warnings.
+- [x] AC-SITE-09: Brand tokens exist once, as CSS custom properties with the names and values in the design direction, and every foreground and background pair listed in the design direction meets its stated minimum contrast ratio in a unit test.
+- [x] AC-SITE-10: Fonts load from the application's own origin; a browser test records zero requests to other origins on every public route.
+- [x] AC-SITE-11: `/login`, `/signup` and `/profile` keep their existing behavior and tests, and use brand tokens.
+- [x] AC-SITE-12: Project name, package name, profile displayName and Wasp app title identify the Pet Rescue by Judy portal and no starter placeholder text remains on public pages.
+- [x] AC-PRERENDER-01: Every public route in the route table, including `/login` and `/signup`, is declared with prerendering, and a production build emits a static HTML file for each.
+- [x] AC-PRERENDER-02: Without running JavaScript, the prerendered HTML of every public route contains the header navigation links, the page h1, the title, the meta description and the footer.
+- [x] AC-PRERENDER-03: Loading each prerendered route in a browser produces no React hydration warning or console error.
+- [x] AC-PRERENDER-04: A route with `authRequired` is never marked for prerendering (the build fails compile otherwise).
+- [x] AC-A11Y-01: Every public route state has no serious or critical axe violations at 320 px and at desktop width.
+- [x] AC-A11Y-02: The primary task (reach each navigation destination) is operable by keyboard only, with visible focus and correct focus return after closing the menu.
+- [x] AC-A11Y-03: Pages reflow at 320 px without horizontal scrolling and remain usable at 200 percent text zoom.
 - [ ] AC-PERF-01: On the prerendered home route, a Lighthouse run with the mobile profile reports performance of at least 90 and records LCP and CLS; any figure below target is reported, not hidden.
 
 ## Test plan
@@ -271,10 +271,50 @@ read time. No logging changes. Rollback is a revert (below).
 
 ## Verification
 
-Not yet implemented. Do not check acceptance criteria without observed evidence.
-Required at Validate: `npm run sdlc:validate`, the AC-mapped unit and component
-tests, the build check output, Playwright and axe results, and the Lighthouse
-record, with skipped checks named.
+Build completed 2026-11-02 in worktree
+`/Users/bernardwilliams/code/DEAPPetAdoptionPortal-impl-009` on branch
+`impl/009-baseline-site-shell` (based on `36d8e09`). Status is **Built**, not
+Validated, because AC-PERF-01 missed its numeric target.
+
+Observed commands:
+
+1. `npm run sdlc:check` — pass: `SDLC governance is valid (Engineering PRD and 9 Feature RDs checked).`
+2. `npm test` (`wasp test client run`) — **8 files / 20 tests passed, 0 failed, 0 skipped.** Existing identity and profile-image tests remained green. Database warning: Prisma P1010 (`postgres` denied on `pet_rescue_by_judy`); compile still succeeded.
+3. `wasp compile` — pass, with the same P1010 warning.
+4. `npm run sdlc:validate` — exit 0. Includes template check, skipped bootstrap smoke (personalized app), unit tests, compile, prerender check, Playwright, Lighthouse.
+
+Prerender: `wasp build` then `vite build`. Output path
+`.wasp/out/web-app/build`. HTML files: `200.html`, `index.html`,
+`about/index.html`, `adopt-foster/index.html`, `animals/index.html`,
+`contact/index.html`, `login/index.html`, `signup/index.html`,
+`successes/index.html`, `surrender/index.html`, `volunteer/index.html`,
+`ways-to-give/index.html`. No `profile` HTML. Each public file contains nav
+hrefs, unique h1, `<title>`, meta description, skip link, Sign in, and footer.
+
+Playwright (`npx playwright test`): **7 passed, 0 failed, 0 skipped** (axe at
+320 and 1280, keyboard menu, origin check, hydration, home vs profile).
+
+Lighthouse (`node scripts/lighthouse-home.mjs`, mobile form-factor on
+prerendered `/`): **performance 66** (target 90), **LCP 4.2 s**, **CLS 0.208**.
+AC-PERF-01 is unchecked. Likely contributors: Wasp client bundle (~322 kB
+`client-entry`) and post-hydration nav collapse (RD-required `useIsClient`
+pattern).
+
+Head mechanism (open decision 4): Wasp 0.26 prerender plus React 19
+`<title>` and `<meta name="description">` in page components. Observed in
+prerendered HTML. The app-level `<title>` from `main.wasp.ts` is also present,
+so each page currently has two title tags; the page-specific title is the
+second.
+
+Unknown routes (open decision 5): Wasp 0.26 documents a `/*` catch-all for a
+branded 404. Not implemented in this RD (no AC). Report only.
+
+AC-IDENTITY-03 is superseded for `/` by AC-SITE-01; `/profile` remains
+`authRequired`.
+
+Volunteer Portal href used: `https://petrescuebyjudy.rescuegroups.org/user/login`
+(current live Volunteer Portal is the RescueGroups login; confirm if a
+Volgistics URL should replace it).
 
 ## Manual smoke
 

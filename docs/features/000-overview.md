@@ -10,7 +10,7 @@
 | 006 | Task tracker getting-started guide | FR-001 | Implemented |
 | 007 | Engineering PRD gate | FR-001 | Implemented |
 | 008 | Automatic Engineering PRD maintenance | FR-001 | Implemented |
-| 009 | Baseline branded site and header navigation | FR-001, FR-024, NFR-SEO-001 | Planned |
+| 009 | Baseline branded site and header navigation | FR-001, FR-024, NFR-SEO-001 | Built |
 
 ## Status vocabulary
 

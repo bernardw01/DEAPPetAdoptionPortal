@@ -1,14 +1,14 @@
 schemaVersion: 1
 
 project:
-  displayName: "Wasp AI Starter"
-  slug: "wasp-ai-starter"
-  packageName: "wasp-ai-starter"
+  displayName: "Pet Rescue by Judy Portal"
+  slug: "pet-rescue-by-judy"
+  packageName: "pet-rescue-by-judy"
   description: "A Wasp application using a role-separated AI development methodology."
 
 organization:
   productOwnerLabel: "Product Owner"
-  copyrightHolder: "Project contributors"
+  copyrightHolder: "Pet Rescue by Judy"
 
 stack:
   framework: "wasp"

@@ -1,9 +1,12 @@
 import { FormEvent, useState } from "react"
 import { login, signup } from "wasp/client/auth"
+import { PageMeta } from "../site/PageMeta"
+import { routeByPath } from "../site/publicRoutes"
 import { assertEmail } from "./identity"
 import "../main.css"
 
 export function SignupPage() {
+  const meta = routeByPath("/signup")
   const [displayName, setDisplayName] = useState("")
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
@@ -37,10 +40,11 @@ export function SignupPage() {
   }
 
   return (
-    <main className="auth-shell">
+    <div className="auth-shell">
+      <PageMeta title={meta.title} description={meta.description} />
       <form className="card form-stack" onSubmit={onSubmit}>
         <p className="eyebrow">New account</p>
-        <h1>Create your account</h1>
+        <h1>{meta.heading}</h1>
         <p>Your email address is also your username.</p>
         <label>
           Display name
@@ -63,6 +67,6 @@ export function SignupPage() {
         <button type="submit" disabled={submitting}>{submitting ? "Creating…" : "Create account"}</button>
         <p>Already registered? <a href="/login">Sign in</a>.</p>
       </form>
-    </main>
+    </div>
   )
 }
