@@ -4,7 +4,8 @@
 
 Proposed
 
-Not approved. This RD depends on PRD 0.4.0 (FR-025, FR-026, FR-027, amended
+Not approved, and sequenced after the animal catalog (Product Owner decision
+2026-11-02: the pet database comes first). This RD depends on PRD 0.4.0 (FR-025, FR-026, FR-027, amended
 FR-014), which is itself awaiting Product Owner approval. The Implementation Agent
 must not start until both are approved. Do not check acceptance criteria without
 observed evidence.
@@ -24,9 +25,11 @@ observed evidence.
   ADR 0003 (roles; email verification not yet adopted, see Open decisions),
   accessibility contract, design direction.
 - Related stories: US-APP-02, US-APP-06, US-APP-07 (updated).
-- Dependencies: approved PRD 0.4.0. Encryption key ring (`APP_DATA_KEYS`) in each
-  environment before first use. Not dependent on the animal catalog, which does
-  not exist yet (see animal selection).
+- Dependencies: approved PRD 0.4.0. The animal catalog Feature RD (RG sync, the
+  `Animal` table and its lookups, FR-010 to FR-012, migration M3) must be
+  Implemented first; this RD reads available cats from it. That RD is not yet
+  written and is the next Architecture Agent task. Encryption key ring
+  (`APP_DATA_KEYS`) in each environment before first use.
 - Source of fields: live PRBJ cat adoption form 6846 supplied by the Product
   Owner on 2026-11-02. Closes the cat part of OQ-10; fields must still be confirmed
   by Barb (OQ-10, OQ-32).
@@ -77,7 +80,7 @@ immutable, encrypted record that is safe to hand to reviewers in a later RD.
   email provider exists yet. Until the notification RD ships, FR-014 is only
   partly met and the site must not go live for applications.
 - Retention purge of submitted applications (US-APP-11 RD). Draft purge is in scope.
-- Animal catalog and the available-cat dropdown (see Animal selection).
+- Building the animal catalog itself (prerequisite RD, see Dependencies).
 - Email verification, password reset, Turnstile at sign-up (auth upgrade RD, ADR
   0003).
 - Guest (signed-out) applications, file uploads, payments, withdrawing a submitted
@@ -121,7 +124,7 @@ Wizard steps (`:step` slugs), in order. "Profile" steps read and write
 
 | # | Slug | Source | Fields |
 |---:|---|---|---|
-| 1 | `cat` | Application | `animalName`, optional `animalSourceId` (from `?animal=`) |
+| 1 | `cat` | Application | `animalId`: a required dropdown of currently available cats from the catalog, pre-selected from `?animal=<animal id or slug>` |
 | 2 | `about-you` | Profile | name, address, ZIP, cell phone, date of birth; email shown read-only |
 | 3 | `work-and-home` | Profile | employer, owner or renter, landlord and phone, lease end |
 | 4 | `household` | Profile | household members (repeatable), has owned pets before |
@@ -178,7 +181,7 @@ Wasp operations (all server side; `context.user` required except where noted):
 | `getApplicantProfile` | query | Decrypts and returns the caller's profile document plus per-section completeness |
 | `saveApplicantProfileSection` | action | `{ section, data, expectedRevision, mode: "strict" \| "lenient" }`; validates the section with zod, merges into the document, re-encrypts, increments `revision`; rejects a stale `expectedRevision` with a conflict error |
 | `clearApplicantProfile` | action | Replaces the document with an empty one (keeps the row); does not touch submitted applications |
-| `startApplication` | action | `{ type: "CAT_ADOPTION", animalSourceId? }`; creates a `DRAFT` with an empty encrypted payload, `purgeAfter` = now + 30 days, and a `draft_created` event; limit 3 open drafts per user and type |
+| `startApplication` | action | `{ type: "CAT_ADOPTION", animalId? }` (must be an available cat when given); creates a `DRAFT` with an empty encrypted payload, `purgeAfter` = now + 30 days, and a `draft_created` event; limit 3 open drafts per user and type |
 | `getApplication` | query | Returns the caller's own application; wizard shape for drafts, read-only shape (answers plus frozen profile snapshot) for submitted; step statuses computed by strict validation |
 | `saveApplicationStep` | action | `{ applicationId, step, data, expectedRevision, mode }`; for profile steps writes the profile (same rules as the profile action) and advances `furthestStep`; for application steps merges into the payload; refreshes `lastSavedAt` and `purgeAfter`; increments `revision` |
 | `submitApplication` | action | Single transaction: re-validate every step strictly against live profile and payload; copy the profile into `profileSnapshot`; set `certification.certifiedAt`; assign a unique `referenceCode`; set `submitterName`, `submitterEmail` (from `User.email`), `submittedAt`, `status = SUBMITTED`, `purgeAfter` (submitted rule); write the `submitted` event; re-encrypt |
@@ -278,13 +281,18 @@ Not applicable (single tenant); per-user isolation is covered above.
 
 None. No email is sent by this RD, no Turnstile, no RG calls.
 
-Animal selection: the available-cat dropdown needs the catalog (`Animal`), which
-does not exist. Step 1 therefore asks for the cat's name as text and, when the
-wizard is opened from a future animal page with `?animal=<RG id>`, keeps
-`animalSourceId` as a hidden value. Both are stored; when the catalog RD ships it
-replaces the text field with a dropdown of available cats and backfills
-`animalId` from `animalSourceId`. Reviewers must verify the name against RG until
-then.
+Animal selection: step 1 lists animals from the local catalog where species is
+cat, status is available and `removedAt` is null, ordered by display name with
+naming tags (FH, TRAINING CAMP) shown as text. No RG call is made at apply time
+(NFR-REL-002: applying keeps working when RG is down, using the last good
+snapshot). `animalId` is stored on `Application` with `animalNameSnapshot`
+(display name at save time), so a reviewer still sees the name if the animal is
+later adopted or removed. `submitApplication` re-checks that the animal still
+exists; if it has since been adopted or removed, submission is allowed only after
+the applicant confirms or changes the choice on step 1, because a cat can be
+adopted while someone fills the form. Courtesy-listed and pending-adoption
+animals follow the catalog's rules for `isAdoptionPending` (the catalog RD
+decides whether they appear).
 
 ### Reliability, recovery, and observability
 
@@ -363,6 +371,7 @@ Wizard, drafts and submission (FR-014, FR-026)
 
 - [ ] AC-CATAPP-01: A signed-out visitor can open `/apply/cat` (prerendered, no redirect) and sees a sign-in action instead of a start action; any `/apply/cat/:id/...` route redirects a signed-out visitor to `/login`.
 - [ ] AC-CATAPP-02: Starting an application creates a `DRAFT` with an encrypted empty payload, a 30 day `purgeAfter`, and a `draft_created` event; a fourth open cat draft is refused with a plain message.
+- [ ] AC-CATAPP-16: Step 1 lists only cats that are available and not removed in the local catalog, makes no RG call, pre-selects the animal from `?animal=` when it is an available cat, rejects any other `animalId` on the server, stores `animalId` and `animalNameSnapshot`, and on submit requires the applicant to reconfirm if that cat is no longer available.
 - [ ] AC-CATAPP-03: The wizard presents the eight steps in the specified order with the fields in the step table, one step per page, and a progress list that marks the current step and each step's status in text.
 - [ ] AC-CATAPP-04: Save and continue on a valid step persists the data and moves to the next step; on an invalid step it saves nothing, shows an error summary and keeps entered values.
 - [ ] AC-CATAPP-05: Back and Save and finish later persist well-formed partial data without requiring completion, then navigate.
@@ -430,7 +439,7 @@ Accessibility and prerender
 
 ## Rollout and rollback
 
-- Rollout order: (1) slice S1 crypto plus migration M4a, (2) S2 profile,
+- Rollout order: the animal catalog RD is Implemented first; then (1) slice S1 crypto plus migration M4a, (2) S2 profile,
   (3) S3 wizard and submit, (4) S4 My applications and draft job. Each slice has
   its own failing tests first and its own commit. `APP_DATA_KEYS` must exist in
   local, staging and production before S1 is used; the Product Owner provisions
@@ -449,20 +458,21 @@ Accessibility and prerender
 
 Recommendations stand unless the Product Owner changes them.
 
-1. Animal selection until the catalog exists: free text name plus optional RG id
-   (recommended), or sequence the catalog RD first. Sequencing is the cleaner
-   result but delays this RD.
+1. Animal selection: **decided 2026-11-02**: the catalog is built first and step 1
+   is a dropdown of available cats. The free text interim is dropped.
 2. Live form marks "Comments / Is there anything else" required. Recommend
    optional; confirm with Judy (OQ-32).
 3. Open draft limit of 3 per user and type, and a 30 day sliding expiry from the
-   last save (matches ADR 0007 proposal). Confirm (OQ-34).
-4. Return to the wizard after sign in. Wasp may not support a post-login redirect
-   target. Recommendation: use it if supported; otherwise land on
+   last save (matches ADR 0007 proposal). **Left as drafted** by the Product
+   Owner 2026-11-02; Judy to confirm (OQ-34).
+4. Return to the wizard after sign in. **Approved 2026-11-02**: use a post-login
+   redirect target if Wasp supports one; otherwise land on
    `/profile/applications`. The Implementation Agent reports what Wasp 0.26
    supports.
 5. Email verification: confirmation emails will go to `User.email`, which is not
-   verified under the current auth method. Recommend the auth upgrade RD (ADR
-   0003) ships before launch; it does not block building this RD.
+   verified under the current auth method. **Decided 2026-11-02**: the auth
+   upgrade RD (ADR 0003: email verification, reset) ships before launch and
+   before the notification RD; it does not block building this RD.
 6. Minimum applicant age for cat adoption: the form collects age but states no
    rule. Recommend no automated gate here and reviewer judgment; confirm with
    Judy (OQ-35).

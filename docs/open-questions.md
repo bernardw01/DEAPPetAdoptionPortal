@@ -45,7 +45,7 @@ Blocks: **Build** = blocks starting that area; **Launch** = blocks go live;
 | OQ-30 | Domain for staging and email deliverability test addresses | Use a DEAP subdomain for staging | Bernard | Build |
 | OQ-32 | Cat form: confirm the field list and which fields are required; the live form requires "Comments", RD 010 makes it optional. Judy to approve the certification wording and the privacy copy that discloses date of birth | Optional comments; certification text copied verbatim and versioned | Judy, Barb | Final approval of RD 010 |
 | OQ-33 | What an applicant sees for each status, and for declines | Plain status names, no notes, no reasons | Judy | Build (reviewer RD) |
-| OQ-34 | Draft rules: 30 day sliding expiry, at most 3 open cat drafts per applicant | Adopt as written | Judy | Build |
+| OQ-34 | Draft rules: 30 day sliding expiry, at most 3 open cat drafts per applicant (Product Owner left as drafted 2026-11-02) | Adopt as written | Judy | Build |
 | OQ-35 | Minimum applicant age for cat adoption (form asks Age, no rule stated) | No automated gate; reviewers decide | Judy | Risk |
 
 ## Seeded from the synopsis (section 6)

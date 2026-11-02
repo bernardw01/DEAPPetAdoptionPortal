@@ -127,7 +127,8 @@ Evidence is recorded only after it is observed.
 ## Phase 9 - Cat adoption application wizard and applicant profile
 
 **Status:** Proposed (Feature RD 010 awaits approval; depends on PRD 0.4.0
-approval)
+approval and on the animal catalog phase being Implemented first, Product Owner
+decision 2026-11-02). The catalog Feature RD is the next RD to write.
 
 **Inputs:** FR-014, FR-025, FR-026, FR-027, NFR-SEC-002, NFR-PRIV-001,
 NFR-A11Y-001 and Feature RD 010.

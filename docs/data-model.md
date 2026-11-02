@@ -145,14 +145,13 @@ All tables have `createdAt` and `updatedAt`. Enums are Prisma enums.
   submit, null on drafts), `type` enum `DOG_ADOPTION, CAT_ADOPTION, FOSTER,
   DOG_FOR_A_DAY, VOLUNTEER`, `status` enum `DRAFT, SUBMITTED, IN_REVIEW,
   NEEDS_INFO, APPROVED, DECLINED, WITHDRAWN, COMPLETED`, `userId?` (set null when
-  an account is deleted; drafts are deleted), `animalSourceId?` (RG animal id as
-  text), `animalNameSnapshot?`, `submitterName?` and `submitterEmail?` (set at
+  an account is deleted; drafts are deleted), `animalId?` (FK to `Animal`, required
+  to submit a cat application), `animalNameSnapshot?`, `submitterName?` and `submitterEmail?` (set at
   submit), `schemaVersion`, `revision`, `furthestStep` (index of the furthest step
   reached, for resume), `lastSavedAt`, `submittedAt?`, `statusChangedAt`,
   `purgeAfter` (drafts: `lastSavedAt` + 30 days; submitted: per ADR 0007).
-  Status transitions enforced by a state machine in the domain layer. `animalId?`
-  (FK to `Animal`) is added by the catalog Feature RD and backfilled by matching
-  `(source, animalSourceId)`.
+  Status transitions enforced by a state machine in the domain layer. The
+  catalog RD (migration M3) must ship before M4a, which references `Animal`.
 - **ApplicationPayload**: `applicationId` unique (cascade), `ciphertext` bytea,
   `nonce`, `keyVersion`. Plaintext is a zod validated document per
   `(type, schemaVersion)`: the application-specific answers, the certification,
@@ -214,8 +213,7 @@ profile fields; fields about this animal or this adoption are application fields
 
 | Field | Type and rule | Form label |
 |---|---|---|
-| `animalName` | 1 to 100 (free text until the catalog exists) | Which animal are you interested in? |
-| `animalSourceId` | optional, digits | the dropdown value (RG animal id) |
+| `animalId` | required on `Application`, not in the payload; an available cat from the catalog | Which animal are you interested in? (dropdown) |
 | `acknowledgesReturnPolicy` | must be `true` to submit | Do you understand PRBJ requires our animals to be returned...? |
 | `indoorOutdoor` | enum `INDOOR, OUTDOOR, BOTH` | Will THIS cat be indoor, outdoor or both? |
 | `daytimeLocation` | 1 to 200 | Where will pet be kept when you are not home? |
@@ -273,7 +271,7 @@ seeded databases, shipped with the Feature RD that needs it. The existing
 | M1 | `User.role`, `emailVerifiedAt`, `lastLoginAt` (default `MEMBER`) | Auth upgrade | Additive; drop columns |
 | M2 | `AuditLog` plus append-only trigger; `Setting`, `Redirect` | Skeleton | Drop tables |
 | M3 | Lookups, `Animal`, `AnimalPicture`, `AnimalVideoUrl`, `SyncRun`, `SyncState`, search vector and indexes | Catalog and sync | Drop tables (cache, rebuildable) |
-| M4a | `ApplicantProfile`, `Application`, `ApplicationPayload`, `ApplicationEvent`, enums | Cat application wizard and profile (RD 010) | Drop tables only before real data exists; after launch use forward fixes |
+| M4a (after M3) | `ApplicantProfile`, `Application`, `ApplicationPayload`, `ApplicationEvent`, enums | Cat application wizard and profile (RD 010) | Drop tables only before real data exists; after launch use forward fixes |
 | M4b | `ApplicationNote` (needs `AuditLog` from M2) | Reviewer workflow RD | Drop table before notes exist; then forward fixes |
 | M5 | `MediaAsset`, `Page`, `PageRevision`, `Event`, `EventAnimal`, `Story`, `Banner`, `Promo`, `WishlistItem`, `ContactMessage` | CMS | Forward fixes after content exists |
 | M6 | `FavoriteAnimal`, `AlertSubscription`, `AlertDelivery` | Accounts | Drop tables |
