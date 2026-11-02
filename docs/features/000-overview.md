@@ -11,6 +11,7 @@
 | 007 | Engineering PRD gate | FR-001 | Implemented |
 | 008 | Automatic Engineering PRD maintenance | FR-001 | Implemented |
 | 009 | Baseline branded site and header navigation | FR-001, FR-024, NFR-SEO-001 | Built |
+| 010 | Public platform design foundation and homepage | FR-001, FR-024, NFR-A11Y-001, NFR-PERF-001 | Proposed |
 
 ## Status vocabulary
 
