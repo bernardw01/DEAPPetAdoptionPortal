@@ -2,50 +2,95 @@
 
 ## Document control
 
-- **Status:** Draft — generated applications must replace and approve this
-  starter baseline before approving domain Feature RDs.
-- **Product owner:** Project owner
+- **Status:** Approved. Baseline approved by the Product Owner; domain Feature
+  RDs may now advance, each through its own approval.
+- **Product owner:** Bernard Williams (DEAP). Client: Pet Rescue by Judy (PRBJ).
 - **Architecture owner:** Architecture Agent
-- **Version:** 0.1.0
-- **Approved by:** Not yet approved
-- **Approval date:** Not yet approved
+- **Version:** 0.3.0
+- **Approved by:** Bernard Williams (Product Owner), version 0.3.0, decision
+  given in chat and recorded by the Architecture Agent
+- **Approval date:** 2026-11-02
+- **Change summary (0.2.0 to 0.3.0), found while preparing Feature RD 009:**
+  adds FR-024 (branded public site shell and primary navigation), NFR-SEO-001
+  (prerender wherever possible), and a public route rule in the authorization
+  section. Product owner direction recorded: application form field lists are
+  captured incrementally and per-form Feature RDs are updated as they arrive
+  (see Assumptions). Impact: Feature RD 009 depends on this revision; one
+  implemented criterion (RD 003 AC-IDENTITY-03, root route requires sign in) is
+  amended so the home route is public.
+- **Change summary (0.1.0 to 0.2.0):** Replaces the template starter text with
+  the PRBJ product baseline. FR-001 to FR-004 and the four starter NFRs are
+  kept verbatim so Feature RDs 001 to 008 still trace. Everything from FR-010
+  and NFR-PERF-001 onward is new. Supporting detail lives in
+  [requirements.md](requirements.md), [architecture.md](architecture.md) and
+  [data-model.md](data-model.md); this document is the contract, those are
+  explanations.
 
 ## Product purpose
 
-Describe the users, problem, desired transformation, and measurable outcomes.
+Replace petrescuebyjudy.com, a table-based RescueGroups.org (RG) hosted site that
+is poor on phones, with a fast, accessible, on-brand website and adoption portal
+for PRBJ, a volunteer-run no-kill rescue in Sanford, Florida. Adopters find a
+pet, apply, and give. A few volunteers run content and review applications
+without a developer. RG stays the system of record for animals.
 
 ## Users, problems, and evidence
 
-- **Primary users:** Identify the people whose work or outcomes change.
-- **Problem:** Describe current behavior and its cost.
-- **Evidence:** Separate observed evidence from assumptions.
-- **Desired outcomes:** Define measurable product and user outcomes.
+- **Primary users:** Adopters and fosters (mostly on phones), visitors and
+  donors, volunteer applicants, rescue staff and volunteers acting as editors
+  and application reviewers, and DEAP as the maintaining consultancy.
+- **Problem:** The current site has limited filtering, is table-based and not
+  mobile friendly, and keeps events, stories, pages and forms inside RG's CMS.
+- **Evidence (observed):** live site review on 2026-11-02 and RG API v5 public
+  documentation, recorded in the DEAP vault synopsis. RG v5 public API is
+  read-only and beta and covers animals and organizations only.
+- **Assumptions (not yet validated):** the animal count is in the low hundreds;
+  most traffic is mobile; four of five application field lists are still
+  uncaptured. See [open-questions.md](open-questions.md).
+- **Desired outcomes:** see NFR-PERF-001, FR-012, and the launch measures in
+  [delivery-plan.md](delivery-plan.md).
 
 ## Goals and non-goals
 
 ### Goals
 
-- Define the outcomes this product must produce.
+- A mobile-first animal catalog with filters, search and shareable URLs, kept
+  current from RG.
+- Online applications (dog, cat, foster, Dog 4 a Day, volunteer) that protect
+  applicant data and give reviewers a status workflow.
+- Volunteer-operable content: pages, events, success stories, banners, flyers.
+- Accounts with favorites, and alerts when matching animals are listed.
+- Zero loss of inbound links and search ranking at cutover.
 
 ### Non-goals
 
-- Name adjacent outcomes the product deliberately will not pursue.
+- Editing animal records (stays in RG).
+- Pushing applications or any data back into RG at launch.
+- On-site donation or adoption-fee payment processing at launch.
+- Volunteer scheduling or management (Volgistics stays external).
+- Multi-rescue or multi-tenant operation.
 
 ## Scope
 
 ### In scope
 
-- Define the first approved product capabilities.
+- Everything in the functional requirements below.
 
 ### Out of scope
 
-- Record tempting adjacent work that is deliberately excluded.
+- The non-goals above, native mobile apps, SMS, and any RG v2 private-API
+  integration unless the Product Owner approves it.
 
 ## Domain and system context
 
-- Define core domain concepts, ownership, and important relationships.
-- Identify actors, system boundaries, trusted services, and untrusted inputs.
-- Record whether the product is single-tenant or multi-tenant.
+- **Core concepts:** Animal (mirrored from RG), Application, Account, Favorite,
+  Alert subscription, Event, Story, Page, Banner, Promo, Media asset, Redirect,
+  Sync run, Audit log. See [data-model.md](data-model.md).
+- **Actors:** Visitor, Account holder, Editor, Reviewer, Admin, the RG API
+  (trusted but beta, read-only), email provider, hosting provider.
+- **Untrusted inputs:** all public form input, RG payloads (validated before
+  persistence), uploaded images, rich text.
+- **Tenancy:** single-tenant. The multitenancy capability pack is not used.
 
 ## Functional requirements
 
@@ -56,6 +101,52 @@ Describe the users, problem, desired transformation, and measurable outcomes.
   application never asks for or generates a separate username.
 - **FR-004:** Users can manage their display name, login email, password, and a
   replaceable profile picture stored durably in PostgreSQL.
+- **FR-010:** Visitors can browse available animals with filters (species,
+  breed, sex, age group, size, good with dogs, cats and kids, special needs,
+  needs foster, in training), sorting and pagination. Filter state is
+  encoded in the URL so any result set can be shared and bookmarked.
+- **FR-011:** Each animal has a detail page with gallery, video when present,
+  status, key attributes, description, a primary Apply action, share, print,
+  and the required RG attribution image. Staff naming tags in RG animal names
+  (FH, TRAINING CAMP, TRAINING CAMP GRADUATE) render as badges, not raw text.
+- **FR-012:** The application mirrors public RG animal data into PostgreSQL on
+  a schedule and on demand. If RG is unavailable, the last good data is served
+  with a freshness indicator. Data older than 7 days is never presented as
+  current.
+- **FR-013:** Visitors can search the site across three scopes: available
+  animals, animals and success stories, and website content.
+- **FR-014:** Visitors can submit dog adoption, cat adoption, foster, Dog 4 a
+  Day and volunteer applications with server-side validation, spam
+  protection, a confirmation to the applicant and a notification to the rescue.
+- **FR-015:** Reviewers can list, filter, open and progress applications through
+  defined statuses and record notes. Only Reviewers and Admins can read
+  applicant data.
+- **FR-016:** Visitors can create an account, save favorite animals, and
+  subscribe to alerts for new animals matching saved criteria such as breed.
+- **FR-017:** Editors can create, edit, preview, publish and unpublish pages,
+  events, success stories, banners (including the surrender capacity banner),
+  home flyers, the wish list and site settings, without a developer.
+- **FR-018:** Visitors can submit a success story with photo; an Editor must
+  approve it before publication.
+- **FR-019:** Visitors can send a contact message; the rescue receives it by
+  email and in the admin inbox.
+- **FR-020:** The site presents all giving options (PayPal, Venmo, check, vet
+  direct, gift cards, wish list, sponsor a pet) and the required nonprofit
+  disclosure text, linking out for payment at launch.
+- **FR-021:** Every legacy URL pattern (`/animals/detail?AnimalID=`, `/info/...`,
+  `/forms/form?formid=`) returns a permanent redirect to its new equivalent, or
+  a deliberate fallback, verified from a crawl of the live site.
+- **FR-022:** Public pages emit crawlable HTML metadata and structured data
+  (title, description, canonical, Open Graph, JSON-LD, sitemap) including for
+  animal, event and story pages.
+- **FR-024:** The public site presents PRBJ branding (wordmark or logo, color,
+  type) on a shared shell with a header and primary navigation (Home, Animals,
+  Adopt / Foster, Surrender, Volunteer, Ways to Give, Successes), a footer with
+  contact details, and a responsive menu on small screens. Every primary
+  destination is reachable without signing in.
+- **FR-023:** Reviewers and Admins receive email notices for new applications,
+  contact messages and story submissions that contain no applicant data, only a
+  link into the authenticated admin.
 
 ## Non-functional requirements
 
@@ -64,46 +155,132 @@ Describe the users, problem, desired transformation, and measurable outcomes.
 - **NFR-REL-001:** Releases have documented validation and rollback procedures.
 - **NFR-DATA-001:** PostgreSQL is the required database from initialization;
   alternative Prisma providers are not supported by the template.
+- **NFR-PERF-001:** On a mid-range phone on 4G, public pages meet LCP at or
+  under 2.5 s, CLS at or under 0.1 and INP at or under 200 ms at the 75th
+  percentile, measured in the field after launch and with Lighthouse in CI.
+- **NFR-SEO-001:** Every public route that has no authentication requirement and
+  no per-user render output is prerendered at build time (Wasp `prerender`),
+  including dynamic routes for which concrete paths can be enumerated at build.
+  Prerendered HTML contains the route's navigation, heading, title and meta
+  description without JavaScript. Where prerendering cannot supply current
+  data-driven content, server-injected metadata and structured data cover the
+  gap (architecture section 3.3). Build-time data must come only from the
+  production data source, never the RG test environment.
+- **NFR-SEC-002:** Applicant personal data (names, addresses, phone, employer,
+  landlord, veterinarian, household details, free text) is encrypted at rest at
+  the application layer with a versioned key, in addition to disk and transport
+  encryption.
+- **NFR-SEC-003:** Every read of application detail, every status change,
+  every export and every role change writes an append-only audit record naming
+  actor, action, target and time. Audit rows cannot be updated or deleted by the
+  application.
+- **NFR-PRIV-001:** Applicant data has a documented retention schedule enforced
+  by a scheduled purge, with purge results logged. The schedule is approved by
+  the rescue (see open questions).
+- **NFR-SEC-004:** Secrets (RG key, encryption keys, email credentials) exist
+  only in server environment variables, are never logged, never reach the
+  client, and are never committed.
+- **NFR-REL-002:** The site remains fully browsable when RG is down or returns
+  429. The sync backs off and alerts; it never hammers RG.
+- **NFR-REL-003:** Nightly encrypted database backups with 30 day retention, a
+  recovery point objective of 24 hours and a recovery time objective of 4 hours,
+  proven by a restore rehearsal before launch.
+- **NFR-OPS-001:** Uptime, sync freshness, error rate and email delivery are
+  monitored, with alerts routed to DEAP and a named rescue contact.
+- **NFR-COMP-001:** The application complies with the RG API terms: public key
+  status at launch, no test-environment data on public pages, one key per
+  service, scheduled refresh at least weekly, one business day purge on RG
+  request, and the required image on pet detail pages.
+- **NFR-OPS-002:** A volunteer can perform routine operations (edit content,
+  review applications, flip the capacity banner) from written admin guidance
+  with no command line access.
+- **NFR-COST-001:** Steady-state hosting and third-party services cost at most
+  USD 50 per month unless the Product Owner approves more. (Proposed target;
+  confirm in open questions.)
 
 ## Authentication, authorization, privacy, and security
 
 - Email/password authentication and profile management are enabled by default.
-- Every protected operation enforces authorization on the server.
-- Define roles, resource ownership, privacy expectations, threat boundaries,
-  and audit requirements before approving dependent Feature RDs.
+- Roles: Account holder (default), Editor, Reviewer, Admin. Editors cannot read
+  application data. Reviewers cannot change roles or settings. Admins can do
+  both but their access is audited like everyone else's.
+- Public routes (home, all content, catalog, application forms, login, signup)
+  need no account. Account, favorites, profile and admin routes require
+  authentication. This supersedes the starter default that protected the root
+  route.
+- Every protected operation enforces authorization on the server; the client
+  hides controls for usability only.
+- Public forms are rate limited and bot protected. Account enumeration is
+  prevented on login, signup and reset flows.
+- Foster contact details and RG contact records are never mirrored or shown.
+- Threat boundaries and PII handling are specified in
+  [architecture.md](architecture.md) and ADR 0007.
 
 ## Data lifecycle and recovery
 
-- Define creation, ownership, retention, deletion, migration, backup, recovery,
-  and audit expectations for persisted data.
+- Animal data is a cache: rebuildable from RG at any time. Removal on RG request
+  within one business day is supported by an admin purge action.
+- Application data is the only irreplaceable sensitive data. Lifecycle:
+  draft, submitted, reviewed, completed or declined, then purged per schedule.
+- Content (pages, events, stories) is irreplaceable and versioned for pages.
+- Backup, restore and migration rules: NFR-REL-003 and the rollback runbook.
+- Schema changes use committed Prisma migrations with expand, migrate,
+  contract sequencing.
 
 ## Accessibility and user experience
 
 - WCAG 2.2 AA is the engineering floor for user-visible behavior.
-- Define supported devices, critical workflows, and alternative interactions.
+- Supported: current and previous major versions of Safari iOS, Chrome Android,
+  Chrome, Safari, Firefox, Edge. 320 px reflow, 200 percent text resize.
+- Critical workflows with keyboard-only and screen reader paths: find an
+  animal, apply, favorite, donate links, contact, admin review.
+- Informative images require alt text in the CMS; the editor blocks publish
+  without it.
 
 ## Reliability, performance, and observability
 
-- Define availability, latency or scale expectations where material.
-- Define failure behavior, logging, monitoring, alerting, and support ownership.
+- Availability target 99.5 percent monthly for public pages (best effort,
+  single region, no paging rota).
+- Sync freshness: hourly for available animals, alert if last success is older
+  than 6 hours.
+- Structured logs without PII; error tracking; synthetic uptime checks on home,
+  an animal page and the sync heartbeat.
+- Support ownership: DEAP for platform; a named rescue contact for content.
 
 ## Integrations and deployment context
 
-- Record external systems, credentials, failure modes, data exchanged, and
-  operational owners.
-- Record the intended deployment provider and environment boundaries.
+- **RG API v5 (read-only, beta):** key in the Authorization header, server side
+  only, behind an adapter interface. Failure modes: 429, 5xx, schema drift.
+- **Email provider (SMTP or API):** transactional mail. Sender domain needs
+  SPF and DKIM.
+- **Bot protection (Turnstile or equivalent), error tracking, uptime monitor.**
+- **External links:** PayPal, Venmo, Amazon, Chewy, Volgistics.
+- **Hosting:** Railway (existing DEAP standard, Railway capability pack).
+  Environments: local, staging, production. See ADR 0002.
+- **DNS and domain:** petrescuebyjudy.com; control and mail records to be
+  confirmed before cutover.
 
 ## Assumptions, dependencies, and risks
 
-- **Assumptions:** Claims that still require validation.
-- **Dependencies:** External or internal prerequisites.
-- **Risks:** Product, data, security, delivery, and operational risks.
+- **Assumptions:** see the Users section; also that RG field names match the
+  v5 docs (unverified against live responses). Application form field lists for
+  cat, foster, Dog 4 a Day and volunteer are captured incrementally; the
+  per-form Feature RDs are written with the best known fields and revised as
+  information arrives, so FR-014 does not wait on a complete inventory.
+- **Dependencies:** client logo files and photography, content access to the RG
+  CMS for export, the four missing application field lists, DNS control, and RG
+  key flipped to Public at launch.
+- **Risks (top):** (1) SEO for dynamic animal pages on a client-rendered
+  framework, (2) RG v5 beta instability, (3) applicant PII handling, (4)
+  missing contract and scope, (5) volunteer operability after handover.
 
 ## Decisions required
 
-- Tenant model.
-- Deployment provider.
-- Data retention and recovery requirements.
+- Approve this baseline.
+- Data retention schedule (NFR-PRIV-001).
+- Whether guests may submit applications without an account.
+- Hosting account ownership and the monthly cost ceiling (NFR-COST-001).
+- Relationship to the separate Joey Barto contract proposal.
 
 ## Requirement traceability
 
@@ -112,4 +289,3 @@ identifiers from this document. During Feature RD preparation, the Architecture
 Agent automatically checks coverage. It leaves this document unchanged when
 coverage exists; if a genuine product-level gap exists, it maintains the PRD
 and presents the focused diff for approval before the Feature RD advances.
-

@@ -107,3 +107,18 @@ baselines unchanged, and proposes only genuine product-level PRD diffs.
 conformance, template structure, bootstrap smoke, Wasp client tests, and Wasp
 compilation.
 
+
+## Phase 8 - Baseline branded site and header navigation
+
+**Status:** Planned (Feature RD 009 approved 2026-11-02)
+
+**Inputs:** FR-001, FR-024, NFR-SEO-001, NFR-A11Y-001, NFR-PERF-001 and Feature
+RD 009.
+
+**Outcome:** The Pet Rescue by Judy portal has a public, branded, prerendered
+baseline site with a header, primary navigation, footer, brand tokens and the
+component, browser and accessibility test harness that later features reuse.
+
+**Verification:** AC-mapped unit and component tests, prerender build check,
+Playwright with axe, Lighthouse record, SDLC conformance, Wasp compilation.
+Evidence is recorded only after it is observed.

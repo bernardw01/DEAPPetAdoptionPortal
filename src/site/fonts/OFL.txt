@@ -1,0 +1,2 @@
+These WOFF2 files are the SIL Open Font License Latin subsets of Fraunces
+and Figtree. Full license text is the SIL Open Font License 1.1.

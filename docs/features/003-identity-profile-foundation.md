@@ -28,6 +28,8 @@ profile management instead of treating identity as later scaffolding.
 - [x] AC-IDENTITY-01: PostgreSQL is declared in schema and checked before database initialization.
 - [x] AC-IDENTITY-02: Sign-up and login expose only email, and the server rejects an identity that differs from the normalized email.
 - [x] AC-IDENTITY-03: Root and profile routes require authentication.
+  Superseded for the root route by Feature RD 009 AC-SITE-01: `/` is public;
+  `/profile` remains authenticated.
 - [x] AC-PROFILE-01: A user can update only their own display name and login email.
 - [x] AC-PROFILE-02: Changing email atomically updates the unique user email and Wasp username identity.
 - [x] AC-PROFILE-03: Password change requires the current password and a stronger replacement.
