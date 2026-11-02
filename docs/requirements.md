@@ -90,8 +90,11 @@ comments, typed name and date certification.
 - On submit: reference code shown, copy emailed to the applicant, link only
   notification to staff (FR-023).
 
-**US-APP-02 Cat adoption.** Same behavior with the cat form fields.
-- Feature RD is drafted with known fields and updated as the field list is captured (OQ-10).
+**US-APP-02 Cat adoption.** Same behavior with the cat form fields, as a signed-in
+applicant. Specified in Feature RD 010 (cat form 6846, captured 2026-11-02).
+- Details about me (name, address, phone, date of birth, employer, housing, household,
+  pets, vet) come from my applicant profile and update it; details about this cat and
+  my plans for it belong to the application.
 
 **US-APP-03 Foster.** I can apply to foster.
 - Eligibility notes shown first: within 30 miles of Sanford, no foster with intent
@@ -117,9 +120,18 @@ release and orientation info.
   email fallback.
 
 **US-APP-07** I can save a draft and return to finish.
-- Signed in applicants: server side draft, encrypted, expires after 30 days.
-- Guests (if allowed, OQ-08): draft kept only in the browser session, with a clear
-  note that it will not survive closing the tab.
+- Applications are multi-step; progress saves on the server after every step (and
+  on "Save and finish later"), encrypted, and expires after 30 days without a save.
+- Accounts are required (OQ-08 closed); there are no guest drafts.
+
+**US-APP-12** I keep an applicant profile so I never retype my details.
+- View, edit by section and clear it; applications pre-fill from it; a submitted
+  application keeps a frozen copy (FR-025).
+
+**US-APP-13** I can see my drafts and submitted applications in my account.
+- List with status and dates; resume or discard drafts; open a read-only copy of
+  submitted applications; I never see other people's applications or reviewer
+  notes (FR-027).
 
 **US-APP-08** As a Reviewer I see a queue of applications and move each through
 statuses.

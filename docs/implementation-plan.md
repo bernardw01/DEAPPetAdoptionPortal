@@ -122,3 +122,26 @@ component, browser and accessibility test harness that later features reuse.
 **Verification:** AC-mapped unit and component tests, prerender build check,
 Playwright with axe, Lighthouse record, SDLC conformance, Wasp compilation.
 Evidence is recorded only after it is observed.
+
+
+## Phase 9 - Cat adoption application wizard and applicant profile
+
+**Status:** Proposed (Feature RD 010 awaits approval; depends on PRD 0.4.0
+approval)
+
+**Inputs:** FR-014, FR-025, FR-026, FR-027, NFR-SEC-002, NFR-PRIV-001,
+NFR-A11Y-001 and Feature RD 010.
+
+**Outcome:** A signed-in applicant completes the cat adoption application in a
+saved, resumable eight-step wizard, reuses an encrypted applicant profile, and
+sees their drafts and submitted applications in their account.
+
+**Slices:** S1 encryption and migration M4a; S2 applicant profile; S3 wizard and
+submit; S4 My applications and draft purge job. Each slice is its own TDD loop.
+
+**Verification:** AC-mapped unit, database integration, component and Playwright
+tests with axe, prerender check, SDLC conformance, Wasp compilation. Evidence is
+recorded only after it is observed.
+
+**Not delivered here:** applicant and staff emails, reviewer workflow, audit log,
+submitted-application retention purge, animal catalog dropdown.

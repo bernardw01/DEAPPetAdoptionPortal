@@ -19,9 +19,9 @@ Blocks: **Build** = blocks starting that area; **Launch** = blocks go live;
 | OQ-05 | Should applications also be pushed back into RG (needs private v2 credentials not requested)? | No. Keep in our system, email notification only | Judy, Barb | Build (scope) |
 | OQ-06 | Hosting account ownership and monthly cost ceiling (proposed USD 50)? Who pays Railway and email providers? | DEAP owns infrastructure and bills a hosting retainer; document transfer path | Bernard, Judy | Build (cost) |
 | OQ-07 | Retention schedule for applicant data (proposed: drafts 30 days, declined 12 months, approved 3 years, contact messages 12 months) | Adopt proposal, get written sign-off; consider legal review | Judy | Build |
-| OQ-08 | May guests submit applications without an account? | Yes with Turnstile and rate limits; accounts optional for drafts and status | Judy, Barb | Build |
+| OQ-08 | May guests submit applications without an account? | **Closed 2026-11-02 (Product Owner): no, an account is required** (PRD 0.4.0, FR-014) | Bernard | Closed |
 | OQ-09 | What goes in the applicant copy email and who receives full forms today? | Staff get a link only; applicant gets their own answers | Judy, Barb | Build |
-| OQ-10 | Field lists for the cat, foster, Dog 4 a Day and volunteer applications (embedded forms not captured) | Draft each form RD with known fields and update the RDs as Barb supplies lists (Product Owner decision 2026-11-02); capture by walking each form logged in | Barb | Final approval of each form RD only |
+| OQ-10 | Field lists for the cat, foster, Dog 4 a Day and volunteer applications (embedded forms not captured). **Cat form captured 2026-11-02** (RD 010); foster, Dog 4 a Day and volunteer remain | Draft each form RD with known fields and update the RDs as Barb supplies lists (Product Owner decision 2026-11-02); capture by walking each form logged in | Barb | Final approval of each form RD only |
 | OQ-11 | Volunteer minimum age: 15 or 18? | 18 unless Judy confirms a youth path | Judy | Build |
 | OQ-12 | Adoption fee wording: detail pages show a fee, policy gives ranges ($150 to $350 dogs, $40 to $150 cats) | Show RG fee string when present, else the policy range with the policy link | Judy | Risk |
 | OQ-13 | Logo files, photography with usage rights, flyers in original formats | See design direction section 8 | Judy, Barb | Launch |
@@ -43,6 +43,10 @@ Blocks: **Build** = blocks starting that area; **Launch** = blocks go live;
 | OQ-29 | Is the Pet Adoption Tracker image, or any RG "Powered by" credit, preferred on the footer? | Follow terms; credit optional | RG | Risk |
 | OQ-31 | Public URL slugs for the primary sections (/adopt-foster, /ways-to-give, /successes) become permanent and feed the redirect map | Accept the slugs in Feature RD 009 | Bernard, Judy | Build (RD 009) |
 | OQ-30 | Domain for staging and email deliverability test addresses | Use a DEAP subdomain for staging | Bernard | Build |
+| OQ-32 | Cat form: confirm the field list and which fields are required; the live form requires "Comments", RD 010 makes it optional. Judy to approve the certification wording and the privacy copy that discloses date of birth | Optional comments; certification text copied verbatim and versioned | Judy, Barb | Final approval of RD 010 |
+| OQ-33 | What an applicant sees for each status, and for declines | Plain status names, no notes, no reasons | Judy | Build (reviewer RD) |
+| OQ-34 | Draft rules: 30 day sliding expiry, at most 3 open cat drafts per applicant | Adopt as written | Judy | Build |
+| OQ-35 | Minimum applicant age for cat adoption (form asks Age, no rule stated) | No automated gate; reviewers decide | Judy | Risk |
 
 ## Seeded from the synopsis (section 6)
 

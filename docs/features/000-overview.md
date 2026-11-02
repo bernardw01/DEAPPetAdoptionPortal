@@ -11,6 +11,7 @@
 | 007 | Engineering PRD gate | FR-001 | Implemented |
 | 008 | Automatic Engineering PRD maintenance | FR-001 | Implemented |
 | 009 | Baseline branded site and header navigation | FR-001, FR-024, NFR-SEO-001 | Built |
+| 010 | Cat adoption application wizard and applicant profile | FR-014, FR-025, FR-026, FR-027, NFR-SEC-002 | Proposed (needs PRD 0.4.0 approval) |
 
 ## Status vocabulary
 
