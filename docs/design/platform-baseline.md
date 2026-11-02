@@ -2,9 +2,7 @@
 
 ## Status
 
-**Proposed.** Awaiting Product Owner approval. Until approved, this document
-and Feature RD 010 are architecture proposals. They are not yet the binding
-implementation contract.
+**Approved.** Binding implementation contract with Feature RD 010.
 
 **Visual reference (design evidence):**
 `docs/design/mockups/prbj-modern-home/` (`index.html`, `styles.css`,
@@ -15,9 +13,9 @@ and approved Feature RDs are the implementation contract.
 
 **Approval block**
 
-- Product Owner:
-- Decision:
-- Date:
+- Product Owner: Bernard Williams
+- Decision: Approved (including ADR 0008 acknowledgement; FR-024 nav destinations retained; Inter OFL; pet-finder may GET `/animals` with query params; provisional logo; announcement/event fixture copy from mockup)
+- Date: 2026-11-02
 
 ## Authority and relationship to other artifacts
 

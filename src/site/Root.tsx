@@ -5,7 +5,8 @@ import { SiteChrome } from "./SiteChrome"
 import { useIsClient } from "./useIsClient"
 import "../main.css"
 
-const NARROW_QUERY = "(max-width: 47.999rem)"
+/** Baseline menu collapse at 980px. */
+const NARROW_QUERY = "(max-width: 980px)"
 
 export function Root() {
   const { pathname } = useLocation()

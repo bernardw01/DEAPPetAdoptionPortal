@@ -9,7 +9,7 @@ const root = process.cwd()
 const htmlRoot = path.join(root, ".wasp/out/web-app/build")
 
 const routes = [
-  { path: "/", file: "index.html", heading: "Welcome to Pet Rescue by Judy", title: "Pet Rescue by Judy | Home", description: "Pet Rescue by Judy is a no-kill rescue in Sanford, Florida. Meet animals, learn how to adopt or foster, and find ways to give." },
+  { path: "/", file: "index.html", heading: "Your new best friend is waiting.", title: "Pet Rescue by Judy | Home", description: "Meet loving dogs and cats ready for adoption at Pet Rescue by Judy in Sanford, Florida. Find your match, foster, volunteer, or give." },
   { path: "/animals", file: "animals/index.html", heading: "Animals", title: "Animals | Pet Rescue by Judy", description: "The animal catalog for Pet Rescue by Judy is coming soon. Contact the rescue for current animals." },
   { path: "/adopt-foster", file: "adopt-foster/index.html", heading: "Adopt / Foster", title: "Adopt or Foster | Pet Rescue by Judy", description: "Adoption and foster information for Pet Rescue by Judy is coming soon. Contact the rescue to get started." },
   { path: "/surrender", file: "surrender/index.html", heading: "Surrender", title: "Surrender | Pet Rescue by Judy", description: "The surrender section for Pet Rescue by Judy is coming soon. Contact the rescue for current guidance." },
