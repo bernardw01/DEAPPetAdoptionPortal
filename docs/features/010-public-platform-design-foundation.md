@@ -2,11 +2,15 @@
 
 ## Status
 
-Proposed
+Built
 
-Awaiting Product Owner approval of this RD and of
-`docs/design/platform-baseline.md` (and acknowledgement of ADR 0008). Do not
-implement until status is Planned (approved).
+Approved by Bernard Williams (Product Owner) on 2026-11-02 together with
+`docs/design/platform-baseline.md` and acknowledgement of ADR 0008. Open
+decisions defaulted to the RD recommendations (FR-024 nav labels; Inter OFL;
+pet-finder may navigate to `/animals` with query params; provisional logo;
+fixture announcement/event copy). Build evidence recorded below on 2026-11-02
+(commit at evidence time was local uncommitted Build on worktree
+`DEAPPetAdoptionPortal-impl-010`).
 
 ## Requirement traceability
 
@@ -194,54 +198,76 @@ otherwise record dual-title limitation.
 
 ## Acceptance criteria
 
-- [ ] AC-FOUNDATION-01: Brand color tokens from the platform baseline exist once
+- [x] AC-FOUNDATION-01: Brand color tokens from the platform baseline exist once
   as CSS custom properties with the specified names and values; contrast pairs
   used for text/UI meet WCAG AA in a unit test.
-- [ ] AC-FOUNDATION-02: Documented font stacks are exactly Georgia (display) and
+  Evidence: `npm test -- --run` → `brandTokens.test.ts` passed (2026-11-02).
+- [x] AC-FOUNDATION-02: Documented font stacks are exactly Georgia (display) and
   Inter (UI/body); Inter is self-hosted WOFF2 with a license file; no third-party
   font requests on public routes.
-- [ ] AC-FOUNDATION-03: Content container max-width is 1180px with desktop
+  Evidence: `brandTokens.test.ts` + Playwright AC-SITE-10 zero foreign origins.
+- [x] AC-FOUNDATION-03: Content container max-width is 1180px with desktop
   gutters of 20px/side and mobile gutters of 14px/side per the baseline.
-- [ ] AC-FOUNDATION-04: Shared primitives exist for announcement, header, nav,
+  Evidence: `brandTokens.test.ts` asserts wrap widths in `src/main.css`.
+- [x] AC-FOUNDATION-04: Shared primitives exist for announcement, header, nav,
   actions, animal card, badge, favorite, trust strip, process steps, involvement
   card, event card, footer, and form controls listed in the baseline (exported
   for reuse; not homepage-only copies).
-- [ ] AC-HOME-01: Unauthenticated visitors open `/` and receive the homepage
+  Evidence: `HomePage.test.tsx` exports check; `SiteChrome.tsx` + `primitives.tsx`.
+- [x] AC-HOME-01: Unauthenticated visitors open `/` and receive the homepage
   (no login redirect); `/profile` still requires authentication.
-- [ ] AC-HOME-02: Homepage presents, in order: skip link, announcement, header,
+  Evidence: Playwright AC-HOME-01 passed.
+- [x] AC-HOME-02: Homepage presents, in order: skip link, announcement, header,
   search-first hero, trust strip, featured pets + chips, adoption process,
   involvement, event, newsletter presentation, footer.
-- [ ] AC-HOME-03: Primary sitewide navigation retains FR-024 destinations in
+  Evidence: Playwright AC-HOME-02 + unit `HomePage.test.tsx`.
+- [x] AC-HOME-03: Primary sitewide navigation retains FR-024 destinations in
   order (Home, Animals, Adopt / Foster, Surrender, Volunteer, Ways to Give,
   Successes) unless Product Owner records an approved label exception in this RD.
-- [ ] AC-HOME-04: Hero pet finder uses real labeled radios and selects; submit
+  Evidence: `fixtures.test.ts` + `SiteChrome.test.tsx`.
+- [x] AC-HOME-04: Hero pet finder uses real labeled radios and selects; submit
   does not POST personal data; newsletter form does not functionally subscribe.
-- [ ] AC-HOME-05: Featured animals use fixture data with correct alt text and
+  Evidence: Playwright AC-HOME-04 + `HomePage.test.tsx`.
+- [x] AC-HOME-05: Featured animals use fixture data with correct alt text and
   provenance comments; favorite toggles expose `aria-pressed` and accessible
   names without nested interactive elements.
-- [ ] AC-HOME-06: Responsive layouts match the baseline at wide (≥981px), tablet
+  Evidence: `fixtures.test.ts` + favorite unit/e2e tests.
+- [x] AC-HOME-06: Responsive layouts match the baseline at wide (≥981px), tablet
   (~980–741), 390px, and 320px (nav collapse, one-column hero/cards as specified).
-- [ ] AC-HOME-07: At ≤980px, Menu has `aria-expanded` and `aria-controls`; Enter/
+  Evidence: Playwright AC-A11Y-03/AC-HOME-06 + AC-VIS-01 screenshots.
+- [x] AC-HOME-07: At ≤980px, Menu has `aria-expanded` and `aria-controls`; Enter/
   Space toggle; Escape closes and returns focus; ≥981px shows links without Menu.
-- [ ] AC-HOME-08: Logo uses the provisional asset without redrawing; proportions
+  Evidence: `SiteChrome.test.tsx` + Playwright AC-A11Y-02/AC-HOME-07.
+- [x] AC-HOME-08: Logo uses the provisional asset without redrawing; proportions
   preserved; production replacement recorded as a pre-production dependency.
-- [ ] AC-HOME-09: Public `/` remains prerendered; prerendered HTML includes nav,
+  Evidence: `fixtures.ts` provisional flag; logo home link/img in SiteChrome tests.
+- [x] AC-HOME-09: Public `/` remains prerendered; prerendered HTML includes nav,
   h1, title, meta description, and footer without JS.
-- [ ] AC-HOME-10: Login, signup, and profile keep existing behavior and tests;
+  Evidence: `npm run test:prerender` → 11 routes; Playwright hydrate check.
+- [x] AC-HOME-10: Login, signup, and profile keep existing behavior and tests;
   they consume foundation tokens (visual only).
-- [ ] AC-A11Y-01: Public homepage (and shell) states have no serious or critical
+  Evidence: Playwright AC-HOME-10 (`--brand` #AE0303).
+- [x] AC-A11Y-01: Public homepage (and shell) states have no serious or critical
   axe violations at 320px and desktop width.
-- [ ] AC-A11Y-02: Primary task (reach Animals / operate finder / open a pet
+  Evidence: Playwright AC-A11Y-01 passed (all public paths, 320 and 1280).
+- [x] AC-A11Y-02: Primary task (reach Animals / operate finder / open a pet
   card link / toggle favorite / open-close menu) is keyboard operable with
   visible focus and correct focus return.
-- [ ] AC-A11Y-03: 320px reflow without horizontal page scroll; usable at 200%
+  Evidence: Playwright AC-A11Y-02/AC-HOME-07 passed.
+- [x] AC-A11Y-03: 320px reflow without horizontal page scroll; usable at 200%
   text zoom; reduced-motion disables non-essential transitions.
-- [ ] AC-PERF-01: Lighthouse mobile on prerendered `/` records performance, LCP,
+  Evidence: Playwright AC-A11Y-03; `prefers-reduced-motion` in `src/main.css`.
+- [x] AC-PERF-01: Lighthouse mobile on prerendered `/` records performance, LCP,
   and CLS; target LCP ≤ 2.5 s and CLS ≤ 0.1; any miss is reported, not hidden.
-- [ ] AC-VIS-01: Screenshot or visual-regression evidence at 1280, 768, 390, and
+  Evidence: `npm run test:lighthouse` → performance **66**, LCP **6.9 s**, CLS **0**.
+  **Miss recorded (not hidden):** below 90 / LCP ≤ 2.5 s; CLS meets ≤ 0.1.
+- [x] AC-VIS-01: Screenshot or visual-regression evidence at 1280, 768, 390, and
   320 widths is recorded against the mockup composition.
-- [ ] AC-GOV-01: `wasp compile` succeeds; `npm run sdlc:check` passes; focused
+  Evidence: `docs/evidence/010-platform-design/home-{1280,768,390,320}.png`.
+- [x] AC-GOV-01: `wasp compile` succeeds; `npm run sdlc:check` passes; focused
   AC-mapped tests pass; no new console errors on the homepage happy path.
+  Evidence: `wasp compile` OK; `sdlc:check` OK; 29/29 unit tests; Playwright
+  hydrate with empty console-error list.
 
 ## Test plan
 
@@ -282,21 +308,33 @@ otherwise record dual-title limitation.
 
 ## Open decisions (Product Owner)
 
-1. Confirm FR-024 nav destinations remain the sitewide primary nav (recommended)
-   versus adopting mockup marketing labels.  
-2. Approve `docs/design/platform-baseline.md` and ADR 0008.  
-3. Confirm Inter self-host license source (OFL recommended).  
-4. Confirm announcement and event placeholder copy for Build vs “coming soon”
-   only.  
-5. Confirm whether pet-finder submit may navigate to `/animals` with query
-   params before catalog exists.  
-6. Logo: continue provisional JPG until client master arrives (OQ-13).
+Resolved 2026-11-02 by Product Owner approval (defaults = RD recommendations):
+
+1. FR-024 destinations remain sitewide primary nav.  
+2. `docs/design/platform-baseline.md` and ADR 0008 Approved/Accepted.  
+3. Inter self-host with OFL license file.  
+4. Announcement and event fixture copy from mockup shipped.  
+5. Pet-finder may GET `/animals` with query params.  
+6. Provisional JPG logo until client master (OQ-13).
 
 ## Verification
 
-Not yet implemented. Do not check acceptance criteria without observed evidence.
-Required at Validate: `npm run sdlc:validate`, AC-mapped tests, prerender check,
-Playwright/axe, Lighthouse figures, visual evidence paths, skipped checks named.
+**Build (2026-11-02), observed:**
+
+| Check | Result |
+|---|---|
+| `npm run sdlc:check` | Pass — “SDLC governance is valid (Engineering PRD and 10 Feature RDs checked).” |
+| `wasp compile` | Pass (DB up-to-date warning only; no compile failure). |
+| `npm test -- --run` | Pass — 10 files / 29 tests. |
+| `npm run test:prerender` | Pass — 11 prerendered HTML files; `/profile` not prerendered. |
+| `npm run test:e2e` | Pass — 10/10 Playwright tests. |
+| `npm run test:lighthouse` | Recorded miss — performance 66, LCP 6.9 s, CLS 0. |
+| Visual evidence | `docs/evidence/010-platform-design/home-{1280,768,390,320}.png` |
+| Help/docs sync | N/A — FR-024 labels unchanged; no new user-guide procedure. |
+| `npm run sdlc:validate` | **Not run** — Validate not requested in this Build. |
+
+Do not treat Built as Validated. Full Validate still requires a fresh
+`npm run sdlc:validate` on the reviewed commit.
 
 ## Manual smoke
 

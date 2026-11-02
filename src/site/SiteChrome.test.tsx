@@ -4,6 +4,7 @@ import { cleanup, render, screen } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import { afterEach, describe, expect, it, vi } from "vitest"
 import { SiteChrome } from "./SiteChrome"
+import { brandLogo } from "./fixtures"
 import { org } from "./org"
 import { primaryNav } from "./publicRoutes"
 
@@ -26,9 +27,10 @@ function renderChrome(overrides: Partial<Parameters<typeof SiteChrome>[0]> = {})
 }
 
 describe("site chrome", () => {
-  it("AC-SITE-02: renders the wordmark and primary navigation landmark in order", () => {
+  it("AC-HOME-03 / AC-HOME-08: renders logo home link and FR-024 primary navigation in order", () => {
     renderChrome()
-    expect(screen.getByRole("link", { name: org.wordmark })).toHaveAttribute("href", "/")
+    expect(screen.getByRole("link", { name: "Pet Rescue by Judy home" })).toHaveAttribute("href", "/")
+    expect(screen.getAllByRole("img", { name: brandLogo.alt }).length).toBeGreaterThanOrEqual(1)
     const nav = screen.getByRole("navigation", { name: "Primary" })
     const links = [...nav.querySelectorAll("a")].map((link) => [link.textContent, link.getAttribute("href")])
     expect(links).toEqual(primaryNav.map((item) => [item.label, item.href]))
@@ -45,32 +47,36 @@ describe("site chrome", () => {
     expect(links.filter((link) => link.classList.contains("is-current"))).toHaveLength(1)
   })
 
-  it("AC-SITE-05: after hydration below 48rem the nav is behind a Menu button that toggles and restores focus on Escape", async () => {
+  it("AC-HOME-07: after hydration at ≤980px the nav is behind a Menu button that toggles and restores focus on Escape", async () => {
     const user = userEvent.setup()
-    renderChrome({ isClient: true, isNarrow: true })
+    const { container } = renderChrome({ isClient: true, isNarrow: true })
     const button = screen.getByRole("button", { name: "Menu" })
-    const nav = screen.getByRole("navigation", { name: "Primary" })
+    const nav = container.querySelector("nav.primary-nav")
+    expect(nav).toBeTruthy()
     expect(button).toHaveAttribute("aria-expanded", "false")
-    expect(button).toHaveAttribute("aria-controls", nav.id)
-    expect(nav.classList.contains("is-collapsed")).toBe(true)
+    expect(button).toHaveAttribute("aria-controls", nav!.id)
+    expect(nav).toHaveAttribute("hidden")
 
     button.focus()
     await user.keyboard("{Enter}")
     expect(button).toHaveAttribute("aria-expanded", "true")
+    expect(nav).not.toHaveAttribute("hidden")
     await user.keyboard(" ")
     expect(button).toHaveAttribute("aria-expanded", "false")
+    expect(nav).toHaveAttribute("hidden")
     await user.keyboard("{Enter}")
-    expect(nav.classList.contains("is-collapsed")).toBe(false)
+    expect(nav).not.toHaveAttribute("hidden")
 
     await user.keyboard("{Escape}")
     expect(button).toHaveAttribute("aria-expanded", "false")
     expect(button).toHaveFocus()
   })
 
-  it("AC-SITE-05: at 48rem and above all links are visible with no Menu button", () => {
+  it("AC-HOME-07: at ≥981px all links are visible with no Menu button", () => {
     renderChrome({ isClient: true, isNarrow: false })
     expect(screen.queryByRole("button", { name: "Menu" })).toBeNull()
-    expect(screen.getByRole("navigation", { name: "Primary" }).classList.contains("is-collapsed")).toBe(false)
+    const nav = screen.getByRole("navigation", { name: "Primary" })
+    expect(nav).not.toHaveAttribute("hidden")
   })
 
   it("AC-SITE-06: skip link is the first focusable control and targets the single main landmark", async () => {

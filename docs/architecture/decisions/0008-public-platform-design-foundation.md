@@ -2,8 +2,8 @@
 
 ## Status
 
-Proposed (awaits Product Owner acknowledgement with Feature RD 010 and
-`docs/design/platform-baseline.md`).
+Accepted (Product Owner Bernard Williams acknowledged with Feature RD 010 and
+`docs/design/platform-baseline.md` on 2026-11-02).
 
 ## Context
 

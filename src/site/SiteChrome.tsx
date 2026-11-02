@@ -1,6 +1,8 @@
 import { type ReactNode, useEffect, useId, useRef, useState } from "react"
+import { announcement, brandLogo } from "./fixtures"
 import { org } from "./org"
 import { primaryNav } from "./publicRoutes"
+import { Wrap } from "./primitives"
 
 export type AccountState =
   | { kind: "sign-in" }
@@ -41,27 +43,48 @@ export function SiteChrome({ currentPath, isClient, isNarrow, account, children 
       <a className="skip-link" href="#main-content">
         Skip to main content
       </a>
-      <header className="site-header">
-        <div className="site-header-inner">
-          <a className="wordmark" href="/">
-            {org.wordmark}
+
+      <div className="announcement" role="status">
+        <Wrap className="announcement__inner">
+          <span>
+            <strong>{announcement.text.split(":")[0]}:</strong>
+            {announcement.text.includes(":") ? announcement.text.slice(announcement.text.indexOf(":") + 1) : ""}
+          </span>
+          <a href={announcement.href}>
+            {announcement.linkLabel} <span aria-hidden="true">→</span>
           </a>
+        </Wrap>
+      </div>
+
+      <header className="site-header">
+        <Wrap className="header__inner">
+          <a className="brand" href="/" aria-label="Pet Rescue by Judy home">
+            <img src={brandLogo.src} alt={brandLogo.alt} width={78} height={66} />
+          </a>
+
           {collapse ? (
             <button
               ref={menuButtonRef}
               type="button"
-              className="menu-toggle"
+              className="menu-button"
+              aria-label="Menu"
               aria-expanded={menuOpen}
               aria-controls={navId}
               onClick={() => setMenuOpen((open) => !open)}
             >
-              Menu
+              <span className="menu-button__label" aria-hidden="true">
+                Menu
+              </span>
+              <span aria-hidden="true">☰</span>
             </button>
           ) : null}
+
           <nav
             id={navId}
-            className={collapse && !menuOpen ? "primary-nav is-collapsed" : "primary-nav"}
+            className="primary-nav"
             aria-label="Primary"
+            data-open={collapse ? (menuOpen ? "true" : "false") : undefined}
+            hidden={collapse && !menuOpen ? true : undefined}
           >
             {primaryNav.map((item) => {
               const current = currentPath === item.href
@@ -77,63 +100,93 @@ export function SiteChrome({ currentPath, isClient, isNarrow, account, children 
               )
             })}
           </nav>
+
           <div className="header-actions">
-            <a className="button donate" href="/ways-to-give">
-              Donate
-            </a>
             {account.kind === "sign-in" ? (
-              <a className="account-control" href="/login">
+              <a className="text-action account-control" href="/login">
                 Sign in
               </a>
             ) : (
               <>
-                <a className="account-control" href="/profile">
+                <a className="text-action account-control" href="/profile">
                   Account
                 </a>
-                <button type="button" className="button-link" onClick={account.onSignOut}>
+                <button type="button" className="text-action button-link" onClick={account.onSignOut}>
                   Sign out
                 </button>
               </>
             )}
+            <a className="button button--small donate" href="/ways-to-give">
+              Donate
+            </a>
           </div>
-        </div>
+        </Wrap>
       </header>
-      <main id="main-content" tabIndex={-1} className="site-main">
+
+      <main id="main-content" tabIndex={-1}>
         {children}
       </main>
-      <footer className="site-footer">
-        <ContactBlock />
-        <nav aria-label="Footer">
-          <a href="/about">About Us</a>
-          <a href="/contact">Contact Us</a>
-          <a
-            href={org.volunteerPortalUrl}
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            Volunteer Portal (opens in a new tab)
-          </a>
-        </nav>
-        <p className="copyright">{org.copyrightLine}</p>
+
+      <footer id="footer" className="site-footer">
+        <Wrap className="footer-grid">
+          <div className="footer-brand">
+            <img src={brandLogo.src} alt={brandLogo.alt} width={115} height={100} />
+            <p>A nonprofit, no-kill rescue giving dogs and cats throughout Central Florida a second chance.</p>
+          </div>
+          <div>
+            <h2>Visit us</h2>
+            <p>
+              {org.addressLines[0]}
+              <br />
+              {org.addressLines[1]}
+            </p>
+            <p>
+              <a href={org.phoneHref}>{org.phoneDisplay}</a>
+              <br />
+              <a href={`mailto:${org.email}`}>{org.email}</a>
+            </p>
+          </div>
+          <div>
+            <h2>Explore</h2>
+            <ul>
+              <li>
+                <a href="/animals">Available pets</a>
+              </li>
+              <li>
+                <a href="/adopt-foster">Adoption process</a>
+              </li>
+              <li>
+                <a href="/volunteer">Volunteer</a>
+              </li>
+              <li>
+                <a href="/ways-to-give">Ways to give</a>
+              </li>
+              <li>
+                <a href="/about">About Us</a>
+              </li>
+              <li>
+                <a href="/contact">Contact Us</a>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h2>Connect</h2>
+            <ul>
+              <li>
+                <a href={org.volunteerPortalUrl} rel="noopener noreferrer" target="_blank">
+                  Volunteer Portal (opens in a new tab)
+                </a>
+              </li>
+              <li>
+                <a href="/contact">Contact us</a>
+              </li>
+            </ul>
+          </div>
+        </Wrap>
+        <Wrap className="footer-bottom">
+          <p>{org.copyrightLine}</p>
+        </Wrap>
       </footer>
     </div>
-  )
-}
-
-function ContactBlock() {
-  return (
-    <address className="contact-details">
-      <p>
-        {org.addressLines[0]}
-        <br />
-        {org.addressLines[1]}
-      </p>
-      <p>
-        <a href={org.phoneHref}>{org.phoneDisplay}</a>
-      </p>
-      <p>
-        <a href={`mailto:${org.email}`}>{org.email}</a>
-      </p>
-    </address>
   )
 }
