@@ -1,2 +1,5 @@
-These WOFF2 files are the SIL Open Font License Latin subsets of Fraunces
-and Figtree. Full license text is the SIL Open Font License 1.1.
+Inter is licensed under the SIL Open Font License, Version 1.1.
+Copyright 2016-2020 The Inter Project Authors.
+Full license text: https://scripts.sil.org/OFL
+
+Georgia is a system font referenced by CSS stack only (not redistributed).

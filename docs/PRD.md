@@ -11,7 +11,7 @@
 - **Approved by:** Bernard Williams (Product Owner), version 0.3.0, decision
   given in chat and recorded by the Architecture Agent. Version 0.4.0: pending.
 - **Approval date:** 2026-11-02 (version 0.3.0)
-- **Change summary (0.3.0 to 0.4.0), found while preparing Feature RD 010:**
+- **Change summary (0.3.0 to 0.4.0), found while preparing Feature RD 012:**
   adds FR-025 (reusable applicant profile), FR-026 (multi-step application that
   saves after every step and can be resumed) and FR-027 (applicants list and open
   their own draft and submitted applications). Amends FR-014 (submission requires
@@ -21,7 +21,7 @@
   and the Decisions required list. Product owner direction recorded 2026-11-02:
   account required to apply; profile holds contact, identity, employer, housing,
   household, pets and veterinarian answers; submitted applications keep a frozen
-  copy; date of birth is stored, not age. Impact: Feature RD 010 depends on this
+  copy; date of birth is stored, not age. Impact: Feature RD 012 depends on this
   revision. No implemented criterion changes.
 - **Change summary (0.2.0 to 0.3.0), found while preparing Feature RD 009:**
   adds FR-024 (branded public site shell and primary navigation), NFR-SEO-001
@@ -300,7 +300,7 @@ without a developer. RG stays the system of record for animals.
 
 - **Assumptions:** see the Users section; also that RG field names match the
   v5 docs (unverified against live responses). The cat adoption form field list
-  was captured on 2026-11-02 (Feature RD 010). Field lists for foster, Dog 4 a Day
+  was captured on 2026-11-02 (Feature RD 012). Field lists for foster, Dog 4 a Day
   and volunteer are captured incrementally; the
   per-form Feature RDs are written with the best known fields and revised as
   information arrives, so FR-014 does not wait on a complete inventory.

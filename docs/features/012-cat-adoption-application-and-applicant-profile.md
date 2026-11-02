@@ -1,4 +1,4 @@
-# Feature RD 010 - Cat adoption application wizard and applicant profile
+# Feature RD 012 - Cat adoption application wizard and applicant profile
 
 ## Status
 
@@ -21,11 +21,11 @@ observed evidence.
   resumable multi-step progress, an applicant-facing application list, or a
   decision on guest submission. PRD revised to 0.4.0 in the same pass; the
   focused diff is summarized in the PRD change summary.
-- Related decisions: ADR 0007 (storage and PII; revised alongside this RD),
+- Related decisions: ADR 0008 and `docs/design/platform-baseline.md` (visual tokens), ADR 0007 (storage and PII; revised alongside this RD),
   ADR 0003 (roles; email verification not yet adopted, see Open decisions),
   accessibility contract, design direction.
 - Related stories: US-APP-02, US-APP-06, US-APP-07 (updated).
-- Dependencies: approved PRD 0.4.0. The animal catalog Feature RD (RG sync, the
+- Dependencies: approved PRD 0.4.0. The animal catalog Feature RD (011, to be written: RG sync, the
   `Animal` table and its lookups, FR-010 to FR-012, migration M3) must be
   Implemented first; this RD reads available cats from it. That RD is not yet
   written and is the next Architecture Agent task. Encryption key ring
@@ -98,7 +98,7 @@ Verified by reading the repository on 2026-11-02:
   `usernameAndPassword` with the normalized email as the username.
 - `/adopt-foster` is a holding page. No `/apply/*` route exists.
 - No jobs, no email, no encryption module, no rate limiter, no `Animal` table.
-- Brand tokens and the shell layout exist (RD 009). Test harness: Vitest, Testing
+- Brand tokens, shared public primitives and the shell layout exist (RD 009 shell and prerender; RD 010 platform design baseline, which supersedes RD 009's tokens and fonts: Inter and Georgia, `src/site/primitives.tsx`). Form controls (text, select, radio-pill group) are only partly covered by RD 010 primitives; this RD adds the accessible wizard form fields it needs on top of those tokens. Test harness: Vitest, Testing
   Library, Playwright with axe, prerender check.
 
 ## Proposed architecture
@@ -326,7 +326,7 @@ decides whether they appear).
   Save and continue as the default button; Add and Remove focus rules as in UI;
   dialogs trap focus, close on Escape and return focus to the trigger; no
   keyboard trap anywhere.
-- Contrast: brand tokens only (RD 009 pairs); error and status text meet 4.5:1
+- Contrast: brand tokens only (the RD 010 platform baseline pairs in `docs/design/platform-baseline.md`); error and status text meet 4.5:1
   and are never the only cue (icon and text prefix).
 - Reflow: single column, usable at 320 px and 200 percent text size, controls at
   least 44 px; repeatable groups stack; the progress list collapses to "Step N of

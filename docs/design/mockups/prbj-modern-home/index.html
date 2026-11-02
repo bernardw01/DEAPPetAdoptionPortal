@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Static homepage design concept for Pet Rescue by Judy." />
+    <title>Pet Rescue by Judy — Modern Homepage Concept</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+
+    <div class="announcement" role="status">
+      <div class="wrap announcement__inner">
+        <span><strong>Adoption weekend:</strong> Meet dogs and cats Saturday in Sanford.</span>
+        <a href="#events">View event details <span aria-hidden="true">→</span></a>
+      </div>
+    </div>
+
+    <header class="site-header">
+      <div class="wrap header__inner">
+        <a class="brand" href="#" aria-label="Pet Rescue by Judy home">
+          <img src="assets/prbj-logo.jpg" alt="Pet Rescue by Judy" />
+        </a>
+
+        <button class="menu-button" type="button" aria-expanded="false" aria-controls="primary-nav">
+          <span class="menu-button__label">Menu</span>
+          <span aria-hidden="true">☰</span>
+        </button>
+
+        <nav id="primary-nav" class="primary-nav" aria-label="Primary navigation">
+          <a href="#pets">Find a pet</a>
+          <a href="#process">How adoption works</a>
+          <a href="#help">Get involved</a>
+          <a href="#events">Events</a>
+          <a href="#footer">About us</a>
+        </nav>
+
+        <div class="header-actions">
+          <a class="text-action" href="#">Sign in</a>
+          <a class="button button--small" href="#give">Donate</a>
+        </div>
+      </div>
+    </header>
+
+    <main id="main-content">
+      <section class="hero">
+        <div class="wrap hero__grid">
+          <div class="hero__content">
+            <p class="eyebrow">Serving pets across Central Florida since 1986</p>
+            <h1>Your new best friend is waiting.</h1>
+            <p class="hero__intro">
+              Meet loving dogs and cats ready for their next chapter. We’ll help you find the right fit for your home and family.
+            </p>
+
+            <form class="pet-finder" action="#pets">
+              <fieldset class="pet-toggle">
+                <legend>What kind of pet are you looking for?</legend>
+                <label><input type="radio" name="pet" value="dog" checked /> <span>Dogs</span></label>
+                <label><input type="radio" name="pet" value="cat" /> <span>Cats</span></label>
+                <label><input type="radio" name="pet" value="all" /> <span>All pets</span></label>
+              </fieldset>
+              <div class="finder-row">
+                <label class="select-field">
+                  <span class="visually-hidden">Age</span>
+                  <select>
+                    <option>Any age</option>
+                    <option>Baby</option>
+                    <option>Young</option>
+                    <option>Adult</option>
+                    <option>Senior</option>
+                  </select>
+                </label>
+                <label class="select-field">
+                  <span class="visually-hidden">Size</span>
+                  <select>
+                    <option>Any size</option>
+                    <option>Small</option>
+                    <option>Medium</option>
+                    <option>Large</option>
+                  </select>
+                </label>
+                <button class="button finder-button" type="submit">Find my match <span aria-hidden="true">→</span></button>
+              </div>
+            </form>
+          </div>
+
+          <div class="hero__visual" aria-label="Featured rescue dog">
+            <div class="hero__arch">
+              <img src="assets/suki.jpg" alt="Suki, an adoptable rescue dog, smiling outside" />
+            </div>
+            <a class="pet-note" href="#pets">
+              <span class="pet-note__name">Meet Suki</span>
+              <span>2 years · House trained</span>
+              <span class="pet-note__link">View her story →</span>
+            </a>
+            <span class="scribble scribble--one" aria-hidden="true">♥</span>
+            <span class="scribble scribble--two" aria-hidden="true">good dog!</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="trust-strip" aria-label="About Pet Rescue by Judy">
+        <div class="wrap trust-strip__grid">
+          <p><strong>No-kill rescue</strong><span>Every life matters</span></p>
+          <p><strong>Sanford, Florida</strong><span>Serving Central Florida</span></p>
+          <p><strong>Right pet, right home</strong><span>Thoughtful matching</span></p>
+          <p><strong>501(c)(3) nonprofit</strong><span>Community supported</span></p>
+        </div>
+      </section>
+
+      <section id="pets" class="section pets-section">
+        <div class="wrap">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Ready to meet them?</p>
+              <h2>Pets looking for love</h2>
+            </div>
+            <a class="arrow-link" href="#">See all available pets <span aria-hidden="true">→</span></a>
+          </div>
+
+          <div class="quick-filters" aria-label="Quick animal filters">
+            <button class="chip chip--active" type="button">Recently arrived</button>
+            <button class="chip" type="button">Dogs</button>
+            <button class="chip" type="button">Cats</button>
+            <button class="chip" type="button">Seniors</button>
+            <button class="chip" type="button">Special needs</button>
+            <button class="chip" type="button">Needs a foster</button>
+          </div>
+
+          <div class="pet-grid">
+            <article class="pet-card">
+              <div class="pet-card__image">
+                <img src="assets/silas.png" alt="Silas, a tan and white rescue puppy" />
+                <span class="badge">New arrival</span>
+                <button class="favorite" type="button" aria-label="Add Silas to favorites" aria-pressed="false">♡</button>
+              </div>
+              <div class="pet-card__body">
+                <p class="pet-card__meta">Dog · 5 months</p>
+                <h3><a href="#">Silas</a></h3>
+                <p>Labrador Retriever / Basenji mix</p>
+                <div class="traits"><span>Good with dogs</span><span>Good with kids</span></div>
+              </div>
+            </article>
+
+            <article class="pet-card">
+              <div class="pet-card__image pet-card__image--suki">
+                <img src="assets/suki.jpg" alt="Suki, a gray rescue dog with bright eyes" />
+                <span class="badge badge--soft">Foster home</span>
+                <button class="favorite" type="button" aria-label="Add Suki to favorites" aria-pressed="false">♡</button>
+              </div>
+              <div class="pet-card__body">
+                <p class="pet-card__meta">Dog · 2 years</p>
+                <h3><a href="#">Suki</a></h3>
+                <p>Labrador Retriever / Terrier mix</p>
+                <div class="traits"><span>House trained</span><span>Medium</span></div>
+              </div>
+            </article>
+
+            <article class="pet-card pet-card--discovery">
+              <div class="pet-card__image pet-card__image--alternate">
+                <img src="assets/silas-2.jpg" alt="A PRBJ rescue puppy relaxing on a blanket" />
+                <span class="badge badge--gold">Keep exploring</span>
+              </div>
+              <div class="pet-card__body">
+                <p class="pet-card__meta">New friends arrive often</p>
+                <h3><a href="#">Your match might be next</a></h3>
+                <p>Browse every available dog and cat, including seniors and special-needs pets.</p>
+                <span class="card-link">View all pets →</span>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="process" class="section process-section">
+        <div class="wrap process-grid">
+          <div class="process-intro">
+            <p class="eyebrow">A thoughtful match</p>
+            <h2>Adoption is a journey. We’re here for every step.</h2>
+            <p>Our goal isn’t the fastest adoption—it’s the right home for every animal and the right companion for every family.</p>
+            <a class="button button--outline" href="#">Read our adoption guide</a>
+          </div>
+          <ol class="steps">
+            <li><span>1</span><div><h3>Find a pet</h3><p>Browse profiles and learn who may fit your life.</p></div></li>
+            <li><span>2</span><div><h3>Apply online</h3><p>Tell us about your home, family, and experience.</p></div></li>
+            <li><span>3</span><div><h3>Meet your match</h3><p>Our team reviews your application and arranges a visit.</p></div></li>
+            <li><span>4</span><div><h3>Welcome them home</h3><p>Complete the adoption and begin your life together.</p></div></li>
+          </ol>
+        </div>
+      </section>
+
+      <section id="help" class="section help-section">
+        <div class="wrap">
+          <div class="section-heading section-heading--light">
+            <div><p class="eyebrow">More ways to help</p><h2>Every person can change a life.</h2></div>
+            <p>Adoption is only one way to make a difference. Give time, open your home, or help provide lifesaving care.</p>
+          </div>
+          <div class="help-grid">
+            <a href="#"><span class="help-icon" aria-hidden="true">⌂</span><h3>Foster a pet</h3><p>Give a dog or cat a safe place to land.</p><span>Learn about fostering →</span></a>
+            <a href="#"><span class="help-icon" aria-hidden="true">♥</span><h3>Volunteer</h3><p>Share your time and talents with the rescue.</p><span>See volunteer options →</span></a>
+            <a id="give" href="#"><span class="help-icon" aria-hidden="true">✦</span><h3>Make a gift</h3><p>Fund food, medicine, shelter, and second chances.</p><span>Choose how to give →</span></a>
+          </div>
+        </div>
+      </section>
+
+      <section id="events" class="section event-section">
+        <div class="wrap event-card">
+          <div class="event-date" aria-label="November 8"><strong>08</strong><span>Nov</span></div>
+          <div class="event-copy">
+            <p class="eyebrow">Upcoming community event</p>
+            <h2>Sanford Food Truck Fiesta: Pints &amp; Paws</h2>
+            <p>Meet adoptable pets, connect with the PRBJ team, and enjoy an afternoon in downtown Sanford.</p>
+            <p class="event-details"><strong>1–6 PM</strong> · West End Trading Company · Sanford, FL</p>
+          </div>
+          <a class="button" href="#">Event details</a>
+        </div>
+      </section>
+
+      <section class="newsletter">
+        <div class="wrap newsletter__grid">
+          <div><p class="eyebrow">Good news, delivered</p><h2>Meet new arrivals and celebrate happy endings.</h2></div>
+          <form class="newsletter-form">
+            <label for="email">Email address</label>
+            <div><input id="email" type="email" placeholder="you@example.com" /><button class="button" type="button">Keep me posted</button></div>
+            <p>This concept does not submit or store information.</p>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <footer id="footer" class="site-footer">
+      <div class="wrap footer-grid">
+        <div class="footer-brand">
+          <img src="assets/prbj-logo.jpg" alt="Pet Rescue by Judy" />
+          <p>A nonprofit, no-kill rescue giving dogs and cats throughout Central Florida a second chance.</p>
+        </div>
+        <div><h2>Visit us</h2><p>401 S. Laurel Avenue<br />Sanford, FL 32771</p><p><a href="tel:14073024497">407-302-4497</a><br /><a href="mailto:info@petrescuebyjudy.com">info@petrescuebyjudy.com</a></p></div>
+        <div><h2>Explore</h2><ul><li><a href="#pets">Available pets</a></li><li><a href="#process">Adoption process</a></li><li><a href="#help">Volunteer</a></li><li><a href="#give">Ways to give</a></li></ul></div>
+        <div><h2>Connect</h2><ul><li><a href="#">Facebook</a></li><li><a href="#">Instagram</a></li><li><a href="#">Volunteer portal</a></li><li><a href="#">Contact us</a></li></ul></div>
+      </div>
+      <div class="wrap footer-bottom"><p>© 2026 Pet Rescue by Judy. Static design concept.</p><p><a href="#">Privacy</a> · <a href="#">Accessibility</a></p></div>
+    </footer>
+    <script src="mockup.js"></script>
+  </body>
+</html>

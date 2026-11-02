@@ -110,7 +110,8 @@ compilation.
 
 ## Phase 8 - Baseline branded site and header navigation
 
-**Status:** Planned (Feature RD 009 approved 2026-11-02)
+**Status:** Built (Feature RD 009; visual tokens/fonts pending supersession by
+Phase 9)
 
 **Inputs:** FR-001, FR-024, NFR-SEO-001, NFR-A11Y-001, NFR-PERF-001 and Feature
 RD 009.
@@ -123,15 +124,30 @@ component, browser and accessibility test harness that later features reuse.
 Playwright with axe, Lighthouse record, SDLC conformance, Wasp compilation.
 Evidence is recorded only after it is observed.
 
+## Phase 9 - Public platform design foundation and homepage
 
-## Phase 9 - Cat adoption application wizard and applicant profile
+**Status:** Proposed (Feature RD 010; awaiting Product Owner approval of the RD
+and `docs/design/platform-baseline.md`)
 
-**Status:** Proposed (Feature RD 010 awaits approval; depends on PRD 0.4.0
+**Inputs:** FR-001, FR-024, NFR-A11Y-001, NFR-PERF-001, NFR-SEO-001; Feature RD
+010; ADR 0008; approved mockup `docs/design/mockups/prbj-modern-home/`.
+
+**Outcome:** One shared public design foundation (Georgia/Inter, mockup tokens,
+shared components) and a search-first homepage matching the approved mockup,
+reusing RD 009 routing/prerender/harness. Live catalog and CMS remain later.
+
+**Verification:** AC-mapped foundation and homepage tests, visual evidence at
+approved viewports, Playwright/axe, prerender check, Lighthouse figures
+(misses reported), SDLC conformance, Wasp compilation.
+
+## Phase 10 - Cat adoption application wizard and applicant profile
+
+**Status:** Proposed (Feature RD 012 awaits approval; depends on PRD 0.4.0
 approval and on the animal catalog phase being Implemented first, Product Owner
-decision 2026-11-02). The catalog Feature RD is the next RD to write.
+decision 2026-11-02). The catalog Feature RD (011, to be written) is the next RD to write.
 
 **Inputs:** FR-014, FR-025, FR-026, FR-027, NFR-SEC-002, NFR-PRIV-001,
-NFR-A11Y-001 and Feature RD 010.
+NFR-A11Y-001 and Feature RD 012.
 
 **Outcome:** A signed-in applicant completes the cat adoption application in a
 saved, resumable eight-step wizard, reuses an encrypted applicant profile, and

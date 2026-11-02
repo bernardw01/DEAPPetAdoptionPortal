@@ -1,8 +1,15 @@
 # Design Direction: Modern Re-skin of the PRBJ Brand
 
-Status: Proposed. This is architecture input for the optional Design Agent and
-for Feature RDs. It is not a mockup and not a final decision on data or
-behavior. Mockups, if any, go under `docs/design/mockups/<slug>/`.
+Status: Proposed (historical). **For implementation after Product Owner
+approval, prefer `docs/design/platform-baseline.md`**, which supersedes the
+provisional Fraunces/Figtree type recommendation and token naming below with
+the exact Georgia/Inter stacks and mockup tokens from
+`docs/design/mockups/prbj-modern-home/`. Keep this file as background research
+until the platform baseline is Approved.
+
+This document was architecture input for the optional Design Agent and for
+Feature RDs. It is not a mockup and not a final decision on data or behavior.
+Mockups go under `docs/design/mockups/<slug>/`.
 
 Brand cues were observed from computed styles on the live site on 2026-11-02
 and have not been checked against rendered screenshots or logo files. Treat

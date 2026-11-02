@@ -35,7 +35,7 @@ Verification legend used below:
 | 17 | `redirect` rows only | Animal and form redirects are computed | Rows for fixed paths plus computed rules; add `matchType`, `hitCount` |
 | 18 | `sync_run` thin | Cannot diagnose staleness or 429 | Add `status`, `view`, `pagesFetched`, `rateLimitedCount`, and `SyncState.lastSuccessAt` |
 | 19 | Animal tags parsed from the name | Name convention may also exist in RG fields | Parse deterministically with tests, keep `rawName`; check RG fields first (V14) |
-| 20 | Applicant details (address, phone, employer, landlord, household, pets, vet) stored per application | Typed again on every application; stale copies; more PII copies than needed | `ApplicantProfile` (one encrypted document per user) holds them; applications keep an encrypted frozen snapshot at submit only (Feature RD 010) |
+| 20 | Applicant details (address, phone, employer, landlord, household, pets, vet) stored per application | Typed again on every application; stale copies; more PII copies than needed | `ApplicantProfile` (one encrypted document per user) holds them; applications keep an encrypted frozen snapshot at submit only (Feature RD 012) |
 
 ## 2. ER diagram
 
@@ -137,7 +137,7 @@ All tables have `createdAt` and `updatedAt`. Enums are Prisma enums.
 
 ### Applications (sensitive, ADR 0007)
 
-- **ApplicantProfile** (Feature RD 010): `id`, `userId` unique (cascade delete),
+- **ApplicantProfile** (Feature RD 012): `id`, `userId` unique (cascade delete),
   `schemaVersion`, `revision` (optimistic concurrency), `ciphertext` bytea,
   `nonce`, `keyVersion`, `createdAt`, `updatedAt`. No plaintext columns beyond
   these. Plaintext document `ApplicantProfileV1` (zod), fields below.
@@ -221,7 +221,7 @@ profile fields; fields about this animal or this adoption are application fields
 | `declawReason` | required when `plansToDeclaw` | if yes, why |
 | `behaviorPlan` | 1 to 2000 | If you adopt a cat and it develops undesirable behavior, what will you do? |
 | `referralSource` | optional, to 1000 | How did you hear about Pet Rescue By Judy? |
-| `comments` | optional, to 2000 | Comments / anything else (live form marks it required; see RD 010 open decisions) |
+| `comments` | optional, to 2000 | Comments / anything else (live form marks it required; see RD 012 open decisions) |
 | `certification.typedName` | 1 to 150 | APPLICATION CERTIFICATION, name |
 | `certification.textVersion` | string, set by server | which certification wording was shown |
 | `certification.certifiedAt` | server timestamp | the date |
@@ -271,7 +271,7 @@ seeded databases, shipped with the Feature RD that needs it. The existing
 | M1 | `User.role`, `emailVerifiedAt`, `lastLoginAt` (default `MEMBER`) | Auth upgrade | Additive; drop columns |
 | M2 | `AuditLog` plus append-only trigger; `Setting`, `Redirect` | Skeleton | Drop tables |
 | M3 | Lookups, `Animal`, `AnimalPicture`, `AnimalVideoUrl`, `SyncRun`, `SyncState`, search vector and indexes | Catalog and sync | Drop tables (cache, rebuildable) |
-| M4a (after M3) | `ApplicantProfile`, `Application`, `ApplicationPayload`, `ApplicationEvent`, enums | Cat application wizard and profile (RD 010) | Drop tables only before real data exists; after launch use forward fixes |
+| M4a (after M3) | `ApplicantProfile`, `Application`, `ApplicationPayload`, `ApplicationEvent`, enums | Cat application wizard and profile (RD 012) | Drop tables only before real data exists; after launch use forward fixes |
 | M4b | `ApplicationNote` (needs `AuditLog` from M2) | Reviewer workflow RD | Drop table before notes exist; then forward fixes |
 | M5 | `MediaAsset`, `Page`, `PageRevision`, `Event`, `EventAnimal`, `Story`, `Banner`, `Promo`, `WishlistItem`, `ContactMessage` | CMS | Forward fixes after content exists |
 | M6 | `FavoriteAnimal`, `AlertSubscription`, `AlertDelivery` | Accounts | Drop tables |

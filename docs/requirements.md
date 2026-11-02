@@ -91,7 +91,7 @@ comments, typed name and date certification.
   notification to staff (FR-023).
 
 **US-APP-02 Cat adoption.** Same behavior with the cat form fields, as a signed-in
-applicant. Specified in Feature RD 010 (cat form 6846, captured 2026-11-02).
+applicant. Specified in Feature RD 012 (cat form 6846, captured 2026-11-02).
 - Details about me (name, address, phone, date of birth, employer, housing, household,
   pets, vet) come from my applicant profile and update it; details about this cat and
   my plans for it belong to the application.

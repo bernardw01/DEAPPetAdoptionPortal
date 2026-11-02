@@ -36,7 +36,7 @@ rescue and applicant without leaking data over email.
    transient memory.
 10. Logs never contain payload fields, tokens or keys; a redaction helper and a
     test enforce this.
-11. (Revision 2026-11-02, Feature RD 010.) Reusable applicant details live in
+11. (Revision 2026-11-02, Feature RD 012.) Reusable applicant details live in
     `ApplicantProfile`, one encrypted document per user using the same AES-256-GCM
     scheme and key ring. Ciphertext is bound to its record by additional
     authenticated data (record kind, id, schema version). A submitted application

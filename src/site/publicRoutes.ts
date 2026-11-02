@@ -21,9 +21,9 @@ export const publicRoutes: PublicRoute[] = [
   {
     path: "/",
     navLabel: "Home",
-    heading: "Welcome to Pet Rescue by Judy",
+    heading: "Your new best friend is waiting.",
     title: "Pet Rescue by Judy | Home",
-    description: "Pet Rescue by Judy is a no-kill rescue in Sanford, Florida. Meet animals, learn how to adopt or foster, and find ways to give.",
+    description: "Meet loving dogs and cats ready for adoption at Pet Rescue by Judy in Sanford, Florida. Find your match, foster, volunteer, or give.",
     kind: "home",
   },
   {
