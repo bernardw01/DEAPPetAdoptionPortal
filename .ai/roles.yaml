@@ -1,0 +1,30 @@
+schemaVersion: 1
+
+roles:
+  human:
+    title: "Product Owner / Release Authority"
+    approves:
+      - feature-rd
+      - architecture-exception
+      - external-action
+      - production-release
+  design:
+    defaultTool: "ChatGPT Codex"
+    responsibility: "Optional static UX exploration; hand off selected direction to architecture"
+    writablePaths:
+      - "docs/design/mockups/**"
+  architecture:
+    defaultTool: "Claude Code"
+    responsibility: "Requirements, Feature RDs, architecture, and implementation-plan slices only"
+    writablePaths:
+      - "docs/**"
+  implementation:
+    defaultTool: "Cursor"
+    responsibility: "Approved Feature RD implementation, tests, evidence, and authorized delivery"
+    writablePaths:
+      - "src/**"
+      - "e2e/**"
+      - "migrations/**"
+      - "docs/features/**"
+      - "docs/implementation-plan.md"
+

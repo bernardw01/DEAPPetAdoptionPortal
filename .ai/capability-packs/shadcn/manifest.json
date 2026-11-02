@@ -1,0 +1,6 @@
+{
+  "name": "shadcn",
+  "version": "0.1.0",
+  "description": "Installed-primitives-first shadcn UI governance.",
+  "files": [{ "source": "shadcn-ui.mdc", "target": ".cursor/rules/13-shadcn-ui.mdc" }]
+}

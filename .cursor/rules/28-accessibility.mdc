@@ -1,0 +1,16 @@
+---
+description: Accessibility requirements for every user-visible change.
+globs:
+  - "src/**/*.tsx"
+  - "src/**/*.css"
+  - "e2e/**/*.ts"
+alwaysApply: false
+---
+
+# Accessibility
+
+Use native semantics, programmatic names, visible focus, logical keyboard
+behavior, non-color status cues, announced dynamic changes, and text
+alternatives. Test applicable states with axe, a keyboard-only primary path,
+contrast evidence, and 320px reflow. A skipped required check blocks completion.
+

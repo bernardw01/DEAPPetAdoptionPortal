@@ -1,0 +1,14 @@
+---
+description: Hard separation between design, architecture, implementation, and human approval.
+alwaysApply: true
+---
+
+# Agent roles
+
+- Design Agent: static mockups only under `docs/design/mockups/**`.
+- Architecture Agent: specifications and plans; no application code or tests.
+- Implementation Agent: approved code, tests, and observed evidence; no silent re-architecture.
+- Human: Feature RD approval, exceptions, external actions, and production authority.
+
+Use separate worktrees or clones for concurrent agents.
+

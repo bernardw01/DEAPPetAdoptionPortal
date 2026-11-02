@@ -1,0 +1,16 @@
+---
+description: Wasp specification and Prisma migration rules.
+globs:
+  - "**/*.wasp.ts"
+  - "schema.prisma"
+  - "migrations/**"
+alwaysApply: false
+---
+
+# Wasp and Prisma
+
+Use the Wasp version declared in `main.wasp.ts` and its matching official
+documentation. Reference source code with Wasp ref imports. Do not install
+`@wasp.sh/spec` from npm; Wasp generates it. Do not edit generated output.
+Persisted schema changes require reviewed migrations, data-impact analysis,
+rollout, rollback, and focused tests.

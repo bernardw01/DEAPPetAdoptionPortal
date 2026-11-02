@@ -1,0 +1,31 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id          String        @id @default(uuid())
+  email       String        @unique
+  displayName String?
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  profileImage ProfileImage?
+}
+
+model ProfileImage {
+  id        String   @id @default(uuid())
+  userId    String   @unique
+  fileName  String
+  mimeType  String
+  byteSize  Int
+  content   Bytes
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+// Add application models through approved Feature RDs and committed migrations.

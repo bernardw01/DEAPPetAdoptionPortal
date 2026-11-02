@@ -1,0 +1,6 @@
+{
+  "name": "multitenancy",
+  "version": "0.1.0",
+  "description": "Organization-scoped data, credentials, jobs, and cross-tenant safeguards.",
+  "files": [{ "source": "tenant-isolation.mdc", "target": ".cursor/rules/18-tenant-isolation.mdc" }]
+}

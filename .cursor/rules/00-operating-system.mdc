@@ -1,0 +1,16 @@
+---
+description: Always-on operating rules for this Wasp repository.
+alwaysApply: true
+---
+
+# Operating system
+
+- Read `AGENTS.md`, `docs/sdlc/README.md`, the PRD, implementation plan, Feature RD index, and relevant Feature RD before implementation.
+- Confirm the Engineering PRD is approved and the Feature RD traces to its requirement IDs.
+- Do not implement an unapproved Feature RD.
+- Make the smallest coherent change that satisfies acceptance criteria.
+- Preserve unrelated work and report exact verification evidence.
+- Build, Validate, Ship, and Deploy are distinct actions defined in the DEAP AI SDLC Playbook.
+- Run `npm run sdlc:check` before claiming readiness for validation or review.
+- External actions require explicit human authorization.
+

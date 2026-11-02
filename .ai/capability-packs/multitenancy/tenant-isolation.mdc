@@ -1,0 +1,18 @@
+---
+description: Tenant isolation architecture and implementation checks.
+alwaysApply: true
+---
+
+# Tenant isolation
+
+Before approving or implementing tenant-owned data access, define and verify:
+
+- active-tenant resolution and server-side authorization;
+- organization scoping for reads, writes, relationships, and audit events;
+- per-tenant credentials for external integrations;
+- tenant grouping and failure isolation in background or batch jobs;
+- explicit authorization for cross-tenant administrator operations;
+- foreign-tenant behavior that returns empty, 403, or 404 without leaking data;
+- migration, backfill, and rollback behavior.
+
+Every applicable Feature RD includes tenant-isolation criteria and negative tests.

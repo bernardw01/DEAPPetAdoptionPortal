@@ -1,0 +1,12 @@
+---
+description: Acceptance-criterion-driven TDD and verification.
+alwaysApply: true
+---
+
+# Testing and quality
+
+Write a failing test named with the relevant `AC-*` identifier, implement the
+minimum passing behavior, and refactor only with the suite green. Use
+`wasp compile` for Wasp validation. Do not use a TypeScript-only check as a
+substitute. Record failures and skipped checks; never claim unrun evidence.
+

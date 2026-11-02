@@ -1,0 +1,12 @@
+---
+description: Railway deployment safeguards and live verification.
+alwaysApply: false
+---
+
+# Railway deployment
+
+Confirm the project, environment, service, domain, and authenticated account
+before writes. Deploy only an unchanged validated commit. A successful Railway
+command is deployment evidence, not proof of correct live behavior. Verify
+migrations, service health, public routes, critical workflows, and rollback
+readiness. Never expose or print secret values.

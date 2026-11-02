@@ -1,0 +1,6 @@
+{
+  "name": "railway",
+  "version": "0.1.0",
+  "description": "Railway deployment and post-deploy verification governance.",
+  "files": [{ "source": "railway-deployment.mdc", "target": ".cursor/rules/07-railway-deployment.mdc" }]
+}

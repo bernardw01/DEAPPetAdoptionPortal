@@ -1,0 +1,31 @@
+schemaVersion: 1
+
+project:
+  displayName: "Wasp AI Starter"
+  slug: "wasp-ai-starter"
+  packageName: "wasp-ai-starter"
+  description: "A Wasp application using a role-separated AI development methodology."
+
+organization:
+  productOwnerLabel: "Product Owner"
+  copyrightHolder: "Project contributors"
+
+stack:
+  framework: "wasp"
+  language: "typescript"
+  database: "postgresql"
+
+capabilities:
+  authentication: "email-password"
+  usernamePolicy: "normalized-email"
+  selfServiceProfile: true
+  profilePicture: true
+  multiTenant: false
+  accessibilityStandard: "WCAG 2.2 AA"
+  deploymentProvider: "unconfigured"
+
+delivery:
+  requireFeatureRdApproval: true
+  requireHumanDeployApproval: true
+  ciMode: "hybrid"
+

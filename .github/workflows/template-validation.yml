@@ -1,0 +1,28 @@
+name: Template validation
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  validate-template:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - name: Install pinned Wasp CLI
+        run: npm install --global @wasp.sh/wasp-cli@0.26.1
+      - name: Generate Wasp packages and install dependencies
+        run: wasp install
+      - run: npm run template:check
+      - run: npm run test:bootstrap
+      - run: npm test
+      - run: npm run compile
+

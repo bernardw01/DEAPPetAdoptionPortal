@@ -1,0 +1,11 @@
+---
+description: Keep user and administrator guidance synchronized with shipped behavior.
+alwaysApply: false
+---
+
+# Help documentation
+
+For user-visible workflow changes, update applicable help and administrator
+guidance or record why it is not needed. Ground every instruction in shipped
+routes and labels. Never include real credentials. A saved draft is not proof
+that documentation is published or reachable.

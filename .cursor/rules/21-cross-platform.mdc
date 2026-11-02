@@ -1,0 +1,12 @@
+---
+description: Cross-platform repository rules for macOS, Linux, and Windows.
+alwaysApply: true
+---
+
+# Cross-platform
+
+Do not create sibling paths that differ only by casing. Use portable Node
+scripts instead of shell-specific behavior for shared workflows. Avoid
+hard-coded home directories, drive letters, path separators, and executable
+bit assumptions. Verify new tooling on every operating system the project
+claims to support.

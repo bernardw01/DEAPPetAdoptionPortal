@@ -1,0 +1,14 @@
+---
+description: Use installed shadcn primitives and accessible composition before custom UI.
+globs:
+  - "src/**/*.tsx"
+alwaysApply: false
+---
+
+# shadcn UI
+
+Inventory installed primitives before proposing custom components. Reuse and
+compose existing accessible primitives; do not assume a registry component is
+installed. Preserve project tokens, import conventions, keyboard behavior,
+focus management, and responsive layout. Do not apply presets or overwrite
+theme files without human approval.

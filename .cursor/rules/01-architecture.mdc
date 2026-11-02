@@ -1,0 +1,11 @@
+---
+description: Project structure and dependency boundaries.
+alwaysApply: true
+---
+
+# Architecture
+
+Prefer feature-oriented modules as the application grows. Keep domain logic
+independent of UI and Wasp-generated imports where practical. Add shared code
+only after real reuse exists. Record consequential, durable decisions under
+`docs/architecture/decisions/` rather than burying them in prompts.

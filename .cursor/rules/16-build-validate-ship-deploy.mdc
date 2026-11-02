@@ -1,0 +1,15 @@
+---
+description: Defines Build, Validate, Ship, and Deploy.
+alwaysApply: true
+---
+
+# Delivery language
+
+- **Build:** implement the approved slice through TDD and focused tests.
+- **Validate:** run `npm run sdlc:validate`; record full evidence; do not deploy.
+- **Ship:** after authorization, prepare and publish the reviewed release candidate.
+- **Deploy:** release only an unchanged, validated commit to the confirmed target.
+
+Never silently combine these actions. Stop if required evidence is stale or
+does not identify the current commit.
+

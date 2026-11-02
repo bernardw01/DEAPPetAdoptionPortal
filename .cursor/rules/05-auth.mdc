@@ -1,0 +1,16 @@
+---
+description: Authentication and authorization safeguards.
+globs:
+  - "src/**/*auth*"
+  - "src/**/*operation*"
+  - "main.wasp.ts"
+alwaysApply: false
+---
+
+# Authentication and authorization
+
+Authentication establishes identity; it does not grant resource access.
+Authorize sensitive operations on the server, apply least privilege, avoid
+account-enumeration leaks, rate-limit abuse-sensitive endpoints, and never log
+credentials or tokens. Feature RDs identify actors, permissions, denials,
+recovery flows, and security test cases.

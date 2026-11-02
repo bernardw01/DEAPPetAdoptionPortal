@@ -1,0 +1,41 @@
+{
+  "name": "wasp-ai-starter",
+  "private": true,
+  "version": "0.6.1",
+  "type": "module",
+  "workspaces": [
+    ".wasp/out/*",
+    ".wasp/out/sdk/wasp"
+  ],
+  "scripts": {
+    "start": "wasp start",
+    "compile": "wasp compile",
+    "test": "wasp test client run",
+    "test:bootstrap": "node scripts/bootstrap-smoke.mjs",
+    "bootstrap": "node scripts/bootstrap.mjs",
+    "capability:add": "node scripts/apply-capability-pack.mjs",
+    "database:check": "node scripts/database-check.mjs",
+    "database:init": "npm run database:check && wasp db migrate-dev",
+    "version:check": "node scripts/version-check.mjs",
+    "version:bump": "node scripts/version.mjs",
+    "sdlc:check": "node scripts/sdlc-check.mjs",
+    "template:check": "node scripts/template-check.mjs && npm run version:check",
+    "sdlc:validate": "npm run sdlc:check && npm run template:check && npm run test:bootstrap && npm test && npm run compile",
+    "sdlc:ship": "npm run sdlc:validate"
+  },
+  "dependencies": {
+    "react": "^19.2.1",
+    "react-dom": "^19.2.1",
+    "react-router": "^8.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "@types/react": "^19.2.7",
+    "@types/react-dom": "^19.2.3",
+    "@wasp.sh/spec": "file:.wasp/spec/",
+    "prisma": "5.19.1",
+    "typescript": "6.0.3",
+    "vite": "^8.1.0",
+    "vitest": "^4.1.9"
+  }
+}
