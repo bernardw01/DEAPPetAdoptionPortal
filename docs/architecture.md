@@ -176,8 +176,8 @@ exact rows in `Redirect`, then computed rules:
 
 | Role | Can |
 |---|---|
-| Visitor | Public site, submit applications (if guests allowed), contact and story forms |
-| Account holder | Own profile, favorites, alerts, own applications and drafts |
+| Visitor | Public site, application information pages, contact and story forms |
+| Account holder | Own profile, applicant profile, favorites, alerts, submit and view own applications and drafts |
 | Editor | CMS content, story moderation, banners, promos, wish list, contact inbox |
 | Reviewer | Applications (read, status, notes), contact inbox |
 | Admin | Everything, plus users and roles, settings, sync control, retention purge, audit view |

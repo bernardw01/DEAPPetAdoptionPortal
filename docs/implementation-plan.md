@@ -139,3 +139,26 @@ reusing RD 009 routing/prerender/harness. Live catalog and CMS remain later.
 **Verification:** AC-mapped foundation and homepage tests, visual evidence at
 approved viewports, Playwright/axe, prerender check, Lighthouse figures
 (misses reported), SDLC conformance, Wasp compilation.
+
+## Phase 10 - Cat adoption application wizard and applicant profile
+
+**Status:** Proposed (Feature RD 012 awaits approval; depends on PRD 0.4.0
+approval and on the animal catalog phase being Implemented first, Product Owner
+decision 2026-11-02). The catalog Feature RD (011, to be written) is the next RD to write.
+
+**Inputs:** FR-014, FR-025, FR-026, FR-027, NFR-SEC-002, NFR-PRIV-001,
+NFR-A11Y-001 and Feature RD 012.
+
+**Outcome:** A signed-in applicant completes the cat adoption application in a
+saved, resumable eight-step wizard, reuses an encrypted applicant profile, and
+sees their drafts and submitted applications in their account.
+
+**Slices:** S1 encryption and migration M4a; S2 applicant profile; S3 wizard and
+submit; S4 My applications and draft purge job. Each slice is its own TDD loop.
+
+**Verification:** AC-mapped unit, database integration, component and Playwright
+tests with axe, prerender check, SDLC conformance, Wasp compilation. Evidence is
+recorded only after it is observed.
+
+**Not delivered here:** applicant and staff emails, reviewer workflow, audit log,
+submitted-application retention purge, animal catalog dropdown.

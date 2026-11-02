@@ -2,14 +2,27 @@
 
 ## Document control
 
-- **Status:** Approved. Baseline approved by the Product Owner; domain Feature
-  RDs may now advance, each through its own approval.
+- **Status:** Proposed. Revision 0.4.0 awaits Product Owner approval (focused
+  diff summarized below). Baseline 0.3.0 was approved on 2026-11-02; Feature RDs
+  that depend only on 0.3.0 requirements may continue.
 - **Product owner:** Bernard Williams (DEAP). Client: Pet Rescue by Judy (PRBJ).
 - **Architecture owner:** Architecture Agent
-- **Version:** 0.3.0
+- **Version:** 0.4.0 (draft). Last approved: 0.3.0
 - **Approved by:** Bernard Williams (Product Owner), version 0.3.0, decision
-  given in chat and recorded by the Architecture Agent
-- **Approval date:** 2026-11-02
+  given in chat and recorded by the Architecture Agent. Version 0.4.0: pending.
+- **Approval date:** 2026-11-02 (version 0.3.0)
+- **Change summary (0.3.0 to 0.4.0), found while preparing Feature RD 012:**
+  adds FR-025 (reusable applicant profile), FR-026 (multi-step application that
+  saves after every step and can be resumed) and FR-027 (applicants list and open
+  their own draft and submitted applications). Amends FR-014 (submission requires
+  a signed-in account, resolving OQ-08), NFR-SEC-003 (audit reads by anyone other
+  than the data subject), NFR-PRIV-001 (profile and draft data), the public route
+  rule (application information pages are public, the application itself is not)
+  and the Decisions required list. Product owner direction recorded 2026-11-02:
+  account required to apply; profile holds contact, identity, employer, housing,
+  household, pets and veterinarian answers; submitted applications keep a frozen
+  copy; date of birth is stored, not age. Impact: Feature RD 012 depends on this
+  revision. No implemented criterion changes.
 - **Change summary (0.2.0 to 0.3.0), found while preparing Feature RD 009:**
   adds FR-024 (branded public site shell and primary navigation), NFR-SEO-001
   (prerender wherever possible), and a public route rule in the authorization
@@ -115,9 +128,11 @@ without a developer. RG stays the system of record for animals.
   current.
 - **FR-013:** Visitors can search the site across three scopes: available
   animals, animals and success stories, and website content.
-- **FR-014:** Visitors can submit dog adoption, cat adoption, foster, Dog 4 a
-  Day and volunteer applications with server-side validation, spam
-  protection, a confirmation to the applicant and a notification to the rescue.
+- **FR-014:** Signed-in account holders can submit dog adoption, cat adoption,
+  foster, Dog 4 a Day and volunteer applications with server-side validation,
+  spam protection, a confirmation to the applicant and a notification to the
+  rescue. Visitors without an account can read each application's information
+  page and are taken to sign in or sign up before starting.
 - **FR-015:** Reviewers can list, filter, open and progress applications through
   defined statuses and record notes. Only Reviewers and Admins can read
   applicant data.
@@ -144,6 +159,21 @@ without a developer. RG stays the system of record for animals.
   Adopt / Foster, Surrender, Volunteer, Ways to Give, Successes), a footer with
   contact details, and a responsive menu on small screens. Every primary
   destination is reachable without signing in.
+- **FR-025:** Account holders keep one reusable applicant profile holding the
+  answers that describe them rather than a particular animal: legal name, address,
+  cell phone, date of birth, employer, housing and landlord, household members,
+  current and past pets, and veterinarian. Applications pre-fill from it, edits
+  made while applying update it, and the holder can view, edit and clear it. A
+  submitted application keeps a frozen copy of the profile values it was
+  submitted with, so later edits never change an application on file.
+- **FR-026:** Applications are completed in a multi-step wizard. Progress is
+  saved on the server after every step (and on request), so an account holder can
+  leave and return on any device to finish. Drafts expire after 30 days without
+  a save. Submission validates every step again on the server and is final.
+- **FR-027:** Account holders can list their own applications with status and
+  last-saved or submitted date, resume a draft, discard a draft, and open a
+  read-only copy of each submitted application from their account. They can never
+  see another person's application or any reviewer note.
 - **FR-023:** Reviewers and Admins receive email notices for new applications,
   contact messages and story submissions that contain no applicant data, only a
   link into the authenticated admin.
@@ -170,12 +200,15 @@ without a developer. RG stays the system of record for animals.
   landlord, veterinarian, household details, free text) is encrypted at rest at
   the application layer with a versioned key, in addition to disk and transport
   encryption.
-- **NFR-SEC-003:** Every read of application detail, every status change,
-  every export and every role change writes an append-only audit record naming
-  actor, action, target and time. Audit rows cannot be updated or deleted by the
+- **NFR-SEC-003:** Every read of application detail by anyone other than the
+  applicant, every status change, every export and every role change writes an
+  append-only audit record naming actor, action, target and time. An applicant's
+  reads of their own profile and applications are not audited. Audit rows cannot be updated or deleted by the
   application.
-- **NFR-PRIV-001:** Applicant data has a documented retention schedule enforced
-  by a scheduled purge, with purge results logged. The schedule is approved by
+- **NFR-PRIV-001:** Applicant data, including drafts and the applicant profile,
+  has a documented retention schedule enforced by a scheduled purge, with purge
+  results logged. The profile lives while the account lives and can be cleared by
+  its owner at any time. The schedule is approved by
   the rescue (see open questions).
 - **NFR-SEC-004:** Secrets (RG key, encryption keys, email credentials) exist
   only in server environment variables, are never logged, never reach the
@@ -204,9 +237,10 @@ without a developer. RG stays the system of record for animals.
 - Roles: Account holder (default), Editor, Reviewer, Admin. Editors cannot read
   application data. Reviewers cannot change roles or settings. Admins can do
   both but their access is audited like everyone else's.
-- Public routes (home, all content, catalog, application forms, login, signup)
-  need no account. Account, favorites, profile and admin routes require
-  authentication. This supersedes the starter default that protected the root
+- Public routes (home, all content, catalog, application information pages, login,
+  signup) need no account. Starting, continuing and submitting an application
+  requires an account. Account, applicant profile, own applications, favorites
+  and admin routes require authentication. This supersedes the starter default that protected the root
   route.
 - Every protected operation enforces authorization on the server; the client
   hides controls for usability only.
@@ -221,7 +255,9 @@ without a developer. RG stays the system of record for animals.
 - Animal data is a cache: rebuildable from RG at any time. Removal on RG request
   within one business day is supported by an admin purge action.
 - Application data is the only irreplaceable sensitive data. Lifecycle:
-  draft, submitted, reviewed, completed or declined, then purged per schedule.
+  draft (expires after 30 days without a save), submitted, reviewed, completed or
+  declined, then purged per schedule. The applicant profile is kept while the
+  account exists and is encrypted like application data.
 - Content (pages, events, stories) is irreplaceable and versioned for pages.
 - Backup, restore and migration rules: NFR-REL-003 and the rollback runbook.
 - Schema changes use committed Prisma migrations with expand, migrate,
@@ -263,8 +299,9 @@ without a developer. RG stays the system of record for animals.
 ## Assumptions, dependencies, and risks
 
 - **Assumptions:** see the Users section; also that RG field names match the
-  v5 docs (unverified against live responses). Application form field lists for
-  cat, foster, Dog 4 a Day and volunteer are captured incrementally; the
+  v5 docs (unverified against live responses). The cat adoption form field list
+  was captured on 2026-11-02 (Feature RD 012). Field lists for foster, Dog 4 a Day
+  and volunteer are captured incrementally; the
   per-form Feature RDs are written with the best known fields and revised as
   information arrives, so FR-014 does not wait on a complete inventory.
 - **Dependencies:** client logo files and photography, content access to the RG
@@ -278,7 +315,8 @@ without a developer. RG stays the system of record for animals.
 
 - Approve this baseline.
 - Data retention schedule (NFR-PRIV-001).
-- Whether guests may submit applications without an account.
+- Whether guests may submit applications without an account. **Decided
+  2026-11-02:** no, an account is required (FR-014; OQ-08 closed).
 - Hosting account ownership and the monthly cost ceiling (NFR-COST-001).
 - Relationship to the separate Joey Barto contract proposal.
 

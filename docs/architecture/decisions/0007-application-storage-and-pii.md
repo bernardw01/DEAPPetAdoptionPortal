@@ -36,6 +36,17 @@ rescue and applicant without leaking data over email.
    transient memory.
 10. Logs never contain payload fields, tokens or keys; a redaction helper and a
     test enforce this.
+11. (Revision 2026-11-02, Feature RD 012.) Reusable applicant details live in
+    `ApplicantProfile`, one encrypted document per user using the same AES-256-GCM
+    scheme and key ring. Ciphertext is bound to its record by additional
+    authenticated data (record kind, id, schema version). A submitted application
+    stores an encrypted frozen copy (`profileSnapshot`) so history is stable;
+    profile edits never change it. The profile lives while the account lives and
+    can be cleared by its owner. Applicant reads of their own data are not audited.
+12. Drafts are saved after every wizard step and expire 30 days after the last
+    save. A daily job deletes expired drafts (no tombstone, never submitted).
+    Date of birth is stored in the profile instead of age so age gates are
+    reliable; the privacy copy discloses this.
 
 ## Alternatives considered
 
